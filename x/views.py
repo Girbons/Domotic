@@ -1,5 +1,4 @@
-from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect
+import RPi.GPIO as GPIO
 
 # Create your views here.
 from django.views.generic import View, TemplateView
@@ -19,5 +18,12 @@ def toggle_light(value):
     if value == 'ON':
         # Comandi per accendere la luce
         print("Light on")
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(4, GPIO.OUT)
+        GPIO.output(4, GPIO.HIGH)
+
     elif value == 'OFF':
         print("Light off")
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(4, GPIO.OUT)
+        GPIO.output(4, GPIO.LOW)
