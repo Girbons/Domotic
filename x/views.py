@@ -10,30 +10,24 @@ class ConfigurationRun(TemplateView):
 
     def get(self, request, *args, **kwargs):
         if request.GET.get('light', None):
-            light_on(request.GET.get('light'))
-            light_off(request.GET.get('light'))
+            pin = request.GET.get('pin')
+            light(pin, request.GET.get('light'))
         return super(ConfigurationRun, self).get(request, *args, **kwargs)
 
 
-def light_on(value):
+def light(pin, value):
     if value == 'ON':
         import RPi.GPIO as GPIO
-
         # Comandi per accendere la luce
         print("Light on")
         # GPIO.setmode(GPIO.BCM)
-        GPIO.setup(4, GPIO.OUT)
-        GPIO.output(4, GPIO.HIGH)
-
-
-def light_off(value):
-    if value == 'OFF':
-        import RPi.GPIO as GPIO
-
+        GPIO.setup(pin, GPIO.OUT)
+        GPIO.output(pin, GPIO.HIGH)
+    elif value == 'OFF':
         print("Light off")
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(4, GPIO.OUT)
-        GPIO.output(4, GPIO.LOW)
+        GPIO.setup(pin, GPIO.OUT)
+        GPIO.output(pin, GPIO.LOW)
 
 
 class GpioR2ConfListView(ListView):
