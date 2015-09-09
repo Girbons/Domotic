@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.views.generic import View, TemplateView, CreateView, ListView, DetailView, UpdateView, \
-    DeleteView, RedirectView, FormView
+    DeleteView
 from .models import GpioR1, GpioR2
 
 
@@ -20,15 +20,18 @@ class ConfigurationRun(DetailView):
 def light(pin, value):
     if value == 'ON':
         import RPi.GPIO as GPIO
+
+        # Comandi per accendere la luce
         print("Light on")
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(pin, GPIO.OUT)
-        GPIO.output(pin, GPIO.HIGH)
+        gpio.setmode(gpio.BCM)
+        gpio.setup(pin, gpio.OUT)
+        gpio.output(pin, gpio.HIGH)
+
     elif value == 'OFF':
         print("Light off")
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(pin, GPIO.OUT)
-        GPIO.output(pin, GPIO.LOW)
+        gpio.setmode(gpio.BCM)
+        gpio.setup(pin, gpio.OUT)
+        gpio.output(pin, gpio.LOW)
 
 
 class GpioR2ConfListView(ListView):
