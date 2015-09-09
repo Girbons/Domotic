@@ -10,4 +10,6 @@ urlpatterns = [
         name='conf_edit'),
     url(r'^configuration/(?P<pk>[0-9]+)/delete/$', views.GpioR2ConfDeleteView.as_view(),
         name='conf_delete'),
+    url(r'^configuration/(?P<pk>[0-9]+)/run/$', views.ConfigurationRun.as_view(),
+        name='conf_run'),
 ]

@@ -10,8 +10,7 @@ class GpioR1Serializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.pin = validated_data.get('pin', instance.pin)
-        instance.command = validated_data.get('command', instance.command)
-        instance.param = validated_data.get('param', instance.param)
+        instance.action = validated_data.get('action', instance.action)
         instance.save()
         return instance
 
@@ -24,7 +23,6 @@ class GpioR2Serializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.pin = validated_data.get('pin', instance.pin)
-        instance.command = validated_data.get('command', instance.command)
-        instance.param = validated_data.get('param', instance.param)
+        instance.action = validated_data.get('action', instance.action)
         instance.save()
         return instance

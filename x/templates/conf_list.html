@@ -3,14 +3,13 @@
     {% for gpior2 in gpior2_list %}
       <div class="mdl-cell mdl-cell--4-col"></div>
       <div class="mdl-cell mdl-cell--4-col">
-
-        <form action="" method="get">
-            <a href="{% url 'conf_detail' pk=gpior2.pk %}" ><p>{{ gpior2.text }}</p></a></div>
-            <div class="demo-card-event mdl-card mdl-shadow--2dp">
-                <button type="submit" value="ON" name="light" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">ON</button>
-                <button type="submit" value="OFF" name="light" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">OFF</button>
+            <div align="center" class="demo-card-event mdl-card mdl-shadow--2dp">
+                <a href="{% url 'conf_detail' pk=gpior2.pk %}" ><p>{{ gpior2.text }}</p></a>
+                <p>Currently Pin:  {{ gpior2.pin }}</p>
+                <p>Currently Action: {{ gpior2.action }}</p>
+                <a href="{% url 'conf_run' pk=gpior2.pk %}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">RUN</button></a>
             </div>
-      </form>
+        </div>
         <div class="mdl-cell mdl-cell--4-col"></div>
     {% endfor %}
 {% endblock %}
