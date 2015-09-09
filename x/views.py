@@ -24,14 +24,14 @@ def light(pin, value):
         # Comandi per accendere la luce
         print("Light on")
         gpio.setmode(gpio.BCM)
-        gpio.setup(pin, gpio.OUT)
-        gpio.output(pin, gpio.HIGH)
+        gpio.setup(int(pin), gpio.OUT)
+        gpio.output(int(pin), gpio.HIGH)
 
     elif value == 'OFF':
         print("Light off")
         gpio.setmode(gpio.BCM)
-        gpio.setup(pin, gpio.OUT)
-        gpio.output(pin, gpio.LOW)
+        gpio.setup(int(pin), gpio.OUT)
+        gpio.output(int(pin), gpio.LOW)
 
 
 class GpioR2ConfListView(ListView):
