@@ -5,6 +5,7 @@ from .models import GpioR1, GpioR2
 
 
 
+
 class ConfigurationRun(DetailView):
     model = GpioR2
     template_name = 'conf_run.html'
@@ -18,9 +19,8 @@ class ConfigurationRun(DetailView):
 
 
 def light(pin, value):
+    import RPi.GPIO as gpio
     if value == 'ON':
-        import RPi.GPIO as GPIO
-
         # Comandi per accendere la luce
         print("Light on")
         gpio.setmode(gpio.BCM)
