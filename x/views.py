@@ -5,13 +5,10 @@ from .models import GpioR1, GpioR2
 
 
 
-class ConfigurationRun(UpdateView):
+class ConfigurationRun(DetailView):
     model = GpioR2
     template_name = 'conf_run.html'
     queryset = GpioR2.objects.all()
-
-    def get_success_url(self):
-        return reverse('conf_list')
 
     def get(self, request, *args, **kwargs):
         if request.GET.get('light', None):
