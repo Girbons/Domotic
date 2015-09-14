@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
     {% for gpior2 in gpior2_list %}
-      <div class="mdl-cell mdl-cell--4-col"></div>
-      <div class="mdl-cell mdl-cell--4-col">
-            <div align="center" class="demo-card-event mdl-card mdl-shadow--2dp">
+            <div class="demo-card-event mdl-card mdl-shadow--2dp">
                 <a href="{% url 'conf_detail' pk=gpior2.pk %}" ><p>{{ gpior2.text }}</p></a>
                 <p>Currently Pin:  {{ gpior2.pin }}</p>
                 <p>Currently Action: {{ gpior2.action }}</p>
-                <a href="{% url 'conf_run' pk=gpior2.pk %}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">RUN</button></a>
+                <form action="{% url 'conf_run' pk=gpior2.pk %}" method="get">
+                        <input type="hidden" value="{{ gpior2.pin }}" name="pin">
+                        <button type="submit" value="ON" name="light" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab mdl-js-ripple-effect">ON</button>
+                        <button type="submit" value="OFF" name="light" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab mdl-js-ripple-effect">OFF</button>
+                </form>
             </div>
-        </div>
-        <div class="mdl-cell mdl-cell--4-col"></div>
     {% endfor %}
 {% endblock %}

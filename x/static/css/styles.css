@@ -156,4 +156,7 @@ _:-ms-input-placeholder, :root .demo-graph {
   box-sizing: border-box;
   align-items: center;
 }
+.demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type  {
+  padding-right: 0;
+}
 
