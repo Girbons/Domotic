@@ -160,3 +160,7 @@ _:-ms-input-placeholder, :root .demo-graph {
   padding-right: 0;
 }
 
+label {
+    width:90px;
+}
+
