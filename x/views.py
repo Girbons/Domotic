@@ -7,7 +7,7 @@ from .models import GpioR1, GpioR2
 
 class ConfigurationRun(UpdateView):
     model = GpioR2
-    template_name = 'conf_run'
+    template_name = 'conf_run.html'
     queryset = GpioR2.objects.all()
 
     def get_success_url(self):
