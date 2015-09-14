@@ -7,7 +7,7 @@ from .models import GpioR1, GpioR2
 
 class ConfigurationRun(DetailView):
     model = GpioR2
-    template_name = 'conf_run.html'
+    template_name = 'conf_list'
     queryset = GpioR2.objects.all()
 
     def get(self, request, *args, **kwargs):
