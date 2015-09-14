@@ -5,7 +5,7 @@
                 <a href="{% url 'conf_detail' pk=gpior2.pk %}" ><p>{{ gpior2.text }}</p></a>
                 <p>Currently Pin:  {{ gpior2.pin }}</p>
                 <p>Currently Action: {{ gpior2.action }}</p>
-                <form action="" method="get">
+                <form action="{% url 'conf_run' pk=gpior2.pk %" method="get">
                         <input type="hidden" value="{{ gpior2.pin }}" name="pin">
                         <button type="submit" value="ON" name="light" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab mdl-js-ripple-effect">ON</button>
                         <button type="submit" value="OFF" name="light" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab mdl-js-ripple-effect">OFF</button>
