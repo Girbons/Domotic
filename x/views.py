@@ -1,8 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
+    TemplateView
 from .models import GpioR1, GpioR2
-
-
+from .forms import RegistrationForm
 
 
 class ConfigurationRun(DetailView):
@@ -46,6 +47,7 @@ class GpioR2CreateView(CreateView):
         return reverse('conf_list')
 
 
+
 class GpioR2DetailView(DetailView):
     model = GpioR2
     queryset = GpioR2.objects.all()
@@ -67,4 +69,13 @@ class GpioR2ConfDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('conf_list')
+
+class Registration(CreateView):
+    model = get_user_model()
+    template_name = 'register.html'
+    form_class = RegistrationForm
+
+    def get_success_url(self):
+        return reverse('login')
+
 

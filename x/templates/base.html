@@ -1,3 +1,5 @@
+{% include 'material/includes/material_js.html' %}
+{% load material_form %}
 <html lang="en">
 <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,48 +9,63 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.deep_orange-red.min.css" />
 </head>
+<body>
     <div class="demo-layout-waterfall mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header mdl-layout__header--waterfall">
+
           <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">Domotic Home Control</span>
+          <a class="mdl-navigation__link" href="{% url 'conf_list' %}"><span class="mdl-layout-title">Domotic Home Control</span></a>
           <div class="mdl-layout-spacer"></div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                      mdl-textfield--floating-label mdl-textfield--align-right">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
             <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" name="sample"
-                     id="waterfall-exp" />
+              <input class="mdl-textfield__input" type="text" name="sample" id="waterfall-exp" />
             </div>
           </div>
         </div>
-        <!-- Bottom row, not visible on scroll -->
         <div class="mdl-layout__header-row">
           <div class="mdl-layout-spacer"></div>
-          <!-- Navigation -->
           <nav class="mdl-navigation">
+              {% if user.is_authenticated %}
+                <a class="mdl-navigation__link" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a class="mdl-navigation__link" href="{% url 'register' %}">Sign in</a>
+                <a class="mdl-navigation__link" href="{% url 'login' %}">Login</a>
+            {% endif %}
             <a class="mdl-navigation__link" href="{% url 'new_conf' %}">New Configuration</a>
             <a class="mdl-navigation__link" href="{% url 'conf_list' %}">Configuration List</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href=""></a>
+            <a class="mdl-navigation__link" href=""></a>
           </nav>
         </div>
       </header>
       <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Domotic Home Control</span>
+
+        <span class="mdl-layout-title">Domotic Home</span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="{% url 'new_conf' %}">New Configuration</a>
-          <a class="mdl-navigation__link" href="{% url 'conf_list' %}">Configuration List</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
+             {% if user.is_authenticated %}
+                <a class="mdl-navigation__link" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a class="mdl-navigation__link" href="{% url 'register' %}">Sign in</a>
+                <a class="mdl-navigation__link" href="{% url 'login' %}">Login</a>
+            {% endif %}
+            <a class="mdl-navigation__link" href="{% url 'new_conf' %}">New Configuration</a>
+            <a class="mdl-navigation__link" href="{% url 'conf_list' %}">Configuration List</a>
+            <a class="mdl-navigation__link" href=""></a>
+            <a class="mdl-navigation__link" href=""></a>
         </nav>
       </div>
       <main class="mdl-layout__content">
           <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--4-col">{% block content %}{% endblock %}</div>
-              <div class="mdl-cell mdl-cell--3-col">ss</div>
-              <div class="mdl-cell mdl-cell--1-col">ssss</div>
+              <div class="mdl-cell mdl-cell--3-col"></div>
+              <div class="mdl-cell mdl-cell--1-col"></div>
           </div>
       </main>
+    <footer class="mdl-mini-footer">
+      <div class="mdl-mini-footer__left-section">
+      </div>
+    </footer>
     </div>
-<body>
+
 </body>
 </html>

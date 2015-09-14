@@ -1,15 +1,24 @@
 from django.conf.urls import include, url
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 from x import views
 
 urlpatterns = [
     url(r'^$', views.GpioR2ConfListView.as_view(), name='conf_list'),
-    url(r'^configuration/new/$', views.GpioR2CreateView.as_view(), name='new_conf'),
-    url(r'^configuration/(?P<pk>[0-9]+)/detail/$', views.GpioR2DetailView.as_view(),
+    url(r'^configuration/new/$', login_required(views.GpioR2CreateView.as_view()), name='new_conf'),
+    url(r'^configuration/(?P<pk>[0-9]+)/detail/$', login_required(views.GpioR2DetailView.as_view()),
         name='conf_detail'),
-    url(r'^configuration/(?P<pk>[0-9]+)/edit/$', views.GpioR2ConfEditView.as_view(),
+    url(r'^configuration/(?P<pk>[0-9]+)/edit/$', login_required(views.GpioR2ConfEditView.as_view()),
         name='conf_edit'),
-    url(r'^configuration/(?P<pk>[0-9]+)/delete/$', views.GpioR2ConfDeleteView.as_view(),
+    url(r'^configuration/(?P<pk>[0-9]+)/delete/$', login_required(views.GpioR2ConfDeleteView.as_view()),
         name='conf_delete'),
-    url(r'^configuration/(?P<pk>[0-9]+)/run/$', views.ConfigurationRun.as_view(),
+    url(r'^configuration/(?P<pk>[0-9]+)/run/$', login_required(views.ConfigurationRun.as_view()),
         name='conf_run'),
+    url(r'^accounts/register/$', views.Registration.as_view(), name='register'),
+    url(r'^accounts/login/$', auth_views.login, {'template_name': 'login.html'},
+        name='login'),
+    url(r'^accounts/logout/$', auth_views.logout, {'template_name': 'logout.html'},
+        name='logout'),
+
+
 ]

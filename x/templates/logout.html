@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+{% if next %}
+    {% if user.is_authenticated %}
+    <p></p>
+    {% else %}
+    <p>login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'django.contrib.auth.views.logout' %}">
+{% csrf_token %}
+    <p>Logged Out</p>
+    <a class="" href="{% url 'conf_list' %}">torna alla home</a>
+</form>
+
+{% endblock %}

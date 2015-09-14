@@ -1,10 +1,18 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content %}
 <div class="demo-card-event mdl-card mdl-shadow--2dp">
-    <form method="POST" class="post-form">{% csrf_token %}
+    <form method="POST">{% csrf_token %}
         <input type="hidden" name="post">
             {{ form.as_p }}
+            <!--{% for field in form.fields %}-->
+              <!--<div do-your-styling>-->
+                <!--{{field}}-->
+              <!--</div>-->
+            <!--{% endfor %}-->
+
         <button type="submit" class="mdl-button mdl-js-button mdl-button--raised">Save</button>
     </form>
 </div>
+<img src="{% static 'images/lù.jpg' %}">
 {% endblock %}
