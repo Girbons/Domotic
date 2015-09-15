@@ -4,14 +4,34 @@
 <div class="demo-card-event mdl-card mdl-shadow--2dp">
     <form method="POST">{% csrf_token %}
         <input type="hidden" name="post">
-            {{ form.as_p }}
-            <!--{% for field in form.fields %}-->
-              <!--<div do-your-styling>-->
-                <!--{{field}}-->
-              <!--</div>-->
-            <!--{% endfor %}-->
-
-        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised">Save</button>
+        {{ form.as_p}}
+    <!--<div class="mdl-textfield mdl-js-textfield">-->
+        <!--<input class="mdl-textfield__input" id="id_text" name="text" type="text" maxlength="50">-->
+        <!--<label class="mdl-textfield__label" for="id_text">Title of configuration</label>-->
+    <!--</div>-->
+    <!--<p>Pin-->
+    <!--<select id="id_pin" name="pin">-->
+        <!--<option value="2">2</option>-->
+        <!--<option value="3">3</option>-->
+        <!--<option value="4">4</option>-->
+        <!--<option value="7">7</option>-->
+        <!--<option value="8">8</option>-->
+        <!--<option value="9">9</option>-->
+        <!--<option value="10">10</option>-->
+        <!--<option value="11">11</option>-->
+        <!--<option value="14">14</option>-->
+        <!--<option value="15">15</option>-->
+        <!--<option value="17">17</option>-->
+        <!--<option value="18">18</option>-->
+        <!--<option value="22">22</option>-->
+        <!--<option value="23">23</option>-->
+        <!--<option value="24">24</option>-->
+        <!--<option value="25">25</option>-->
+    <!--</select></p>-->
+    <!--<p>Action<select id="id_action" name="action">-->
+        <!--<option value="toggle_light">Toggle Light</option>-->
+    <!--</select></p>-->
+    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Save</button>
     </form>
 </div>
 <img src="{% static 'images/lù.jpg' %}">
