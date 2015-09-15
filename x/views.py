@@ -1,22 +1,50 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
     TemplateView
 from .models import GpioR1, GpioR2
 from .forms import RegistrationForm
 
 
-class ConfigurationRun(DetailView):
+
+
+
+
+
+
+
+
+class GpioR2ConfListView(ListView):
     model = GpioR2
-    template_name = 'conf_run.html'
     queryset = GpioR2.objects.all()
+    template_name = 'conf_list.html'
+
+
+class GpioR2CreateView(CreateView):
+    model = GpioR2
+    fields = ('text', 'pin', 'action', )
+    template_name = 'new_conf.html'
+
+    def get_success_url(self):
+        return reverse('conf_list')
+
+    @method_decorator(permission_required('x.add_gpior2'))
+    def dispatch(self, *args, **kwargs):
+        return super(GpioR2CreateView, self).dispatch(*args, **kwargs)
+
+
+class GpioR2DetailView(DetailView):
+    model = GpioR2
+    queryset = GpioR2.objects.all()
+    template_name = 'conf_detail.html'
 
     def get(self, request, *args, **kwargs):
         if request.GET.get('light', None):
             pin = request.GET.get('pin')
             light(pin, request.GET.get('light'))
-        return super(ConfigurationRun, self).get(request, *args, **kwargs)
-
+        return super(GpioR2DetailView, self).get(request, *args, **kwargs)
 
 def light(pin, value):
     import RPi.GPIO as gpio
@@ -33,27 +61,6 @@ def light(pin, value):
         gpio.output(int(pin), gpio.LOW)
 
 
-class GpioR2ConfListView(ListView):
-    model = GpioR2
-    queryset = GpioR2.objects.all()
-    template_name = 'conf_list.html'
-
-class GpioR2CreateView(CreateView):
-    model = GpioR2
-    fields = ('text', 'pin', 'action', )
-    template_name = 'new_conf.html'
-
-    def get_success_url(self):
-        return reverse('conf_list')
-
-
-
-class GpioR2DetailView(DetailView):
-    model = GpioR2
-    queryset = GpioR2.objects.all()
-    template_name = 'conf_detail.html'
-
-
 class GpioR2ConfEditView(UpdateView):
     model = GpioR2
     fields = ('text', 'pin', 'action', )
@@ -62,6 +69,9 @@ class GpioR2ConfEditView(UpdateView):
     def get_success_url(self):
         return reverse('conf_detail', args=(self.get_object().pk, ))
 
+    @method_decorator(permission_required('x.change_gpior2'))
+    def dispatch(self, *args, **kwargs):
+        return super(GpioR2ConfEditView, self).dispatch(*args, **kwargs)
 
 class GpioR2ConfDeleteView(DeleteView):
     model = GpioR2
@@ -70,12 +80,23 @@ class GpioR2ConfDeleteView(DeleteView):
     def get_success_url(self):
         return reverse('conf_list')
 
-class Registration(CreateView):
-    model = get_user_model()
-    template_name = 'register.html'
-    form_class = RegistrationForm
+    @method_decorator(permission_required('x.delete_gpior2'))
+    def dispatch(self, request, *args, **kwargs):
+        return super(GpioR2ConfDeleteView, self).dispatch(*args, **kwargs)
 
-    def get_success_url(self):
-        return reverse('login')
+
+# class Registration(CreateView):
+#     model = get_user_model()
+#     template_name = 'register.html'
+#     form_class = RegistrationForm
+#
+#     def get_success_url(self):
+#         return reverse('login')
+
+
+
+class Profile(ListView):
+    model = get_user_model()
+    template_name = 'profile.html'
 
 
