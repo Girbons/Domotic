@@ -19,5 +19,7 @@ urlpatterns = [
     url(r'^accounts/logout/$', auth_views.logout, {'template_name': 'logout.html'},
         name='logout'),
     url('^accounts/profile/$', login_required(Profile.as_view()), name='profile'),
+    url(r'^configuration/(?P<pk>[0-9]+)/run/$', login_required(views.ConfigurationRun.as_view()),
+        name='conf_run'),
 
 ]

@@ -5,15 +5,32 @@ from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
     TemplateView
 from .models import GpioR1, GpioR2
-from .forms import RegistrationForm
+
+class ConfigurationRun(DetailView):
+    model = GpioR2
+    template_name = 'conf_run.html'
+    queryset = GpioR2.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        if request.GET.get('light', None):
+            pin = request.GET.get('pin')
+            light(pin, request.GET.get('light'))
+        return super(ConfigurationRun, self).get(request, *args, **kwargs)
 
 
+def light(pin, value):
+    import RPi.GPIO as gpio
+    if value == 'ON':
+        print("Light on")
+        gpio.setmode(gpio.BCM)
+        gpio.setup(int(pin), gpio.OUT)
+        gpio.output(int(pin), gpio.HIGH)
 
-
-
-
-
-
+    elif value == 'OFF':
+        print("Light off")
+        gpio.setmode(gpio.BCM)
+        gpio.setup(int(pin), gpio.OUT)
+        gpio.output(int(pin), gpio.LOW)
 
 
 class GpioR2ConfListView(ListView):
@@ -40,25 +57,6 @@ class GpioR2DetailView(DetailView):
     queryset = GpioR2.objects.all()
     template_name = 'conf_detail.html'
 
-    def get(self, request, *args, **kwargs):
-        if request.GET.get('light', None):
-            pin = request.GET.get('pin')
-            light(pin, request.GET.get('light'))
-        return super(GpioR2DetailView, self).get(request, *args, **kwargs)
-
-def light(pin, value):
-    import RPi.GPIO as gpio
-    if value == 'ON':
-        print("Light on")
-        gpio.setmode(gpio.BCM)
-        gpio.setup(int(pin), gpio.OUT)
-        gpio.output(int(pin), gpio.HIGH)
-
-    elif value == 'OFF':
-        print("Light off")
-        gpio.setmode(gpio.BCM)
-        gpio.setup(int(pin), gpio.OUT)
-        gpio.output(int(pin), gpio.LOW)
 
 
 class GpioR2ConfEditView(UpdateView):
@@ -83,16 +81,6 @@ class GpioR2ConfDeleteView(DeleteView):
     @method_decorator(permission_required('x.delete_gpior2'))
     def dispatch(self, request, *args, **kwargs):
         return super(GpioR2ConfDeleteView, self).dispatch(*args, **kwargs)
-
-
-# class Registration(CreateView):
-#     model = get_user_model()
-#     template_name = 'register.html'
-#     form_class = RegistrationForm
-#
-#     def get_success_url(self):
-#         return reverse('login')
-
 
 
 class Profile(ListView):
