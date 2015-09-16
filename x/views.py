@@ -11,11 +11,18 @@ class ConfigurationRun(DetailView):
     template_name = 'conf_run.html'
     queryset = GpioR2.objects.all()
 
+
+
+class GpioR2ConfListView(ListView):
+    model = GpioR2
+    queryset = GpioR2.objects.all()
+    template_name = 'conf_list.html'
+
     def get(self, request, *args, **kwargs):
         if request.GET.get('light', None):
             pin = request.GET.get('pin')
             light(pin, request.GET.get('light'))
-        return super(ConfigurationRun, self).get(request, *args, **kwargs)
+        return super(GpioR2ConfListView, self).get(request, *args, **kwargs)
 
 
 def light(pin, value):
@@ -32,11 +39,6 @@ def light(pin, value):
         gpio.setup(int(pin), gpio.OUT)
         gpio.output(int(pin), gpio.LOW)
 
-
-class GpioR2ConfListView(ListView):
-    model = GpioR2
-    queryset = GpioR2.objects.all()
-    template_name = 'conf_list.html'
 
 
 class GpioR2CreateView(CreateView):
