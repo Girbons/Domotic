@@ -27,16 +27,14 @@ class GpioR2ConfListView(ListView):
 
 def light(pin, value):
     import RPi.GPIO as gpio
-    gpio.setup(int(pin), gpio.OUT)
-    gpio.output(int(pin), gpio.LOW)
-    if value == 'ON':
-        print("Light on")
+    if value == 'OFF':
+        print("Light off")
         gpio.setmode(gpio.BCM)
         gpio.setup(int(pin), gpio.OUT)
         gpio.output(int(pin), gpio.HIGH)
 
-    elif value == 'OFF':
-        print("Light off")
+    elif value == 'ON':
+        print("Light on")
         gpio.setmode(gpio.BCM)
         gpio.setup(int(pin), gpio.OUT)
         gpio.output(int(pin), gpio.LOW)
