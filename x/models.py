@@ -26,9 +26,11 @@ class GpioR1(models.Model):
 class GpioR2(models.Model):
     CHOICES = ((2, 2), (3, 3), (4, 4), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (14, 14),
                  (15, 15), (17, 17), (18, 18), (22, 22), (23, 23), (24, 24), (25, 25),)
+    RELE = ((1, 1), (2, 2), (4, 4), (8, 8), (16, 16), (32, 32),)
     text = models.CharField(max_length=50, default='type the configuration name  ')
     pin = models.IntegerField(choices=CHOICES)
     action = models.CharField(choices=Gpio.ACTIONS, max_length=30, default='')
+    rele = models.IntegerField(choices=RELE)
 
     def __str__(self):
         return self.text

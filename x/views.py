@@ -12,7 +12,6 @@ class ConfigurationRun(DetailView):
     queryset = GpioR2.objects.all()
 
 
-
 class GpioR2ConfListView(ListView):
     model = GpioR2
     queryset = GpioR2.objects.all()
@@ -22,7 +21,25 @@ class GpioR2ConfListView(ListView):
         if request.GET.get('light', None):
             pin = request.GET.get('pin')
             light(pin, request.GET.get('light'))
+        elif request.GET.get('light8', None):
+            pin = request.GET.get('pin')
+            light8(pin, request.GET.get('light8'))
         return super(GpioR2ConfListView, self).get(request, *args, **kwargs)
+
+
+def light8(pin, value):
+    import RPi.GPIO as gpio
+    if value == 'OFF':
+        print("Light off")
+        gpio.setmode(gpio.BCM)
+        gpio.setup(int(pin), gpio.OUT)
+        gpio.output(int(pin), gpio.HIGH)
+
+    elif value == 'ON':
+        print("Light on")
+        gpio.setmode(gpio.BCM)
+        gpio.setup(int(pin), gpio.OUT)
+        gpio.output(int(pin), gpio.LOW)
 
 
 def light(pin, value):
@@ -40,10 +57,9 @@ def light(pin, value):
         gpio.output(int(pin), gpio.LOW)
 
 
-
 class GpioR2CreateView(CreateView):
     model = GpioR2
-    fields = ('text', 'pin', 'action', )
+    fields = ('text', 'pin', 'action', 'rele', )
     template_name = 'new_conf.html'
 
     def get_success_url(self):
@@ -60,10 +76,9 @@ class GpioR2DetailView(DetailView):
     template_name = 'conf_detail.html'
 
 
-
 class GpioR2ConfEditView(UpdateView):
     model = GpioR2
-    fields = ('text', 'pin', 'action', )
+    fields = ('text', 'pin', 'action', 'rele', )
     template_name = 'conf_edit.html'
 
     def get_success_url(self):
@@ -72,6 +87,7 @@ class GpioR2ConfEditView(UpdateView):
     @method_decorator(permission_required('x.change_gpior2'))
     def dispatch(self, *args, **kwargs):
         return super(GpioR2ConfEditView, self).dispatch(*args, **kwargs)
+
 
 class GpioR2ConfDeleteView(DeleteView):
     model = GpioR2
