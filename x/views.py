@@ -98,7 +98,7 @@ class GpioR2ConfDeleteView(DeleteView):
 
     @method_decorator(permission_required('x.delete_gpior2'))
     def dispatch(self, request, *args, **kwargs):
-        return super(GpioR2ConfDeleteView, self).dispatch(*args, **kwargs)
+        return super(GpioR2ConfDeleteView, self).dispatch(request, *args, **kwargs)
 
 
 class Profile(ListView):
