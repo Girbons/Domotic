@@ -106,3 +106,5 @@ class Profile(ListView):
     template_name = 'profile.html'
 
 
+class PageNotFoundView(TemplateView):
+    template_name = '404.html'
