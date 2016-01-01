@@ -4,12 +4,10 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
     TemplateView
-from .models import GpioR1, GpioR2
 
-class ConfigurationRun(DetailView):
-    model = GpioR2
-    template_name = 'conf_run.html'
-    queryset = GpioR2.objects.all()
+from x.serializers import GpioR1Serializer, GpioR2Serializer
+from .models import GpioR1, GpioR2
+from rest_framework import viewsets
 
 
 class GpioR2ConfListView(ListView):
@@ -21,25 +19,7 @@ class GpioR2ConfListView(ListView):
         if request.GET.get('light', None):
             pin = request.GET.get('pin')
             light(pin, request.GET.get('light'))
-        elif request.GET.get('light8', None):
-            pin = request.GET.get('pin')
-            light8(pin, request.GET.get('light8'))
         return super(GpioR2ConfListView, self).get(request, *args, **kwargs)
-
-
-def light8(pin, value):
-    import RPi.GPIO as gpio
-    if value == 'OFF':
-        print("Light off")
-        gpio.setmode(gpio.BCM)
-        gpio.setup(int(pin), gpio.OUT)
-        gpio.output(int(pin), gpio.HIGH)
-
-    elif value == 'ON':
-        print("Light on")
-        gpio.setmode(gpio.BCM)
-        gpio.setup(int(pin), gpio.OUT)
-        gpio.output(int(pin), gpio.LOW)
 
 
 def light(pin, value):
@@ -59,7 +39,7 @@ def light(pin, value):
 
 class GpioR2CreateView(CreateView):
     model = GpioR2
-    fields = ('text', 'pin', 'action', 'rele', )
+    fields = ('text', 'pin', 'action', )
     template_name = 'new_conf.html'
 
     def get_success_url(self):
@@ -78,7 +58,7 @@ class GpioR2DetailView(DetailView):
 
 class GpioR2ConfEditView(UpdateView):
     model = GpioR2
-    fields = ('text', 'pin', 'action', 'rele', )
+    fields = ('text', 'pin', 'action', )
     template_name = 'conf_edit.html'
 
     def get_success_url(self):
@@ -108,3 +88,12 @@ class Profile(ListView):
 
 class PageNotFoundView(TemplateView):
     template_name = '404.html'
+
+class GpioR1CreateView(CreateView):
+    model = GpioR1
+    fields = ('text', 'pin', 'action', )
+    template_name = 'new_conf.html'
+
+    def get_success_url(self):
+        return reverse('conf_list')
+

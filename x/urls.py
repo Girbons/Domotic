@@ -2,9 +2,11 @@ from django.conf.urls import include, url
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.template.backends import django
+from rest_framework import routers
 
 from x import views
 from .views import Profile
+
 
 urlpatterns = [
     url(r'^$', login_required(views.GpioR2ConfListView.as_view()), name='conf_list'),
@@ -22,5 +24,6 @@ urlpatterns = [
         name='logout'),
     url('^accounts/profile/$', login_required(Profile.as_view()), name='profile'),
     url(r'^404/$', views.PageNotFoundView.as_view(), name='404'),
+
 
 ]
