@@ -9,8 +9,14 @@ class Gpio(models.Model):
 
     ACTIONS = (
         ('toggle light', 'toggle light'),
+        ('termos', 'termos'),
     )
 
+    STATUS = (
+        ('UNDEFINED', 'Undefined'),
+        ('ON', 'ON'),
+        ('OFF', 'OFF'),
+    )
 
 class GpioR1(models.Model):
     CHOICES = ((0, 0), (1, 1), (4, 4), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (14, 14),
@@ -28,10 +34,11 @@ class GpioR2(models.Model):
     CHOICES = ((2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (12, 12),  (13, 13),
                (14, 14), (15, 15),(16, 16), (17, 17), (19, 19), (18, 18),(20, 20), (21, 21), (22, 22), (23, 23),
                (24, 24), (25, 25), (26, 26), (27, 27))
-    text = models.CharField(max_length=50, default='type the configuration name  ')
+    text = models.CharField(max_length=50, default='type the configuration name')
     pin = models.IntegerField(choices=CHOICES)
     action = models.CharField(choices=Gpio.ACTIONS, max_length=30, default='')
     version = models.CharField(default='RASPBERRY 2', max_length=18)
+    status = models.CharField(choices=Gpio.STATUS, default='', max_length=10, )
 
     def __str__(self):
         return self.text

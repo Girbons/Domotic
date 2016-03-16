@@ -4,10 +4,7 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
     TemplateView
-
-from x.serializers import GpioR1Serializer, GpioR2Serializer
 from .models import GpioR1, GpioR2
-from rest_framework import viewsets
 
 
 class GpioR2ConfListView(ListView):
@@ -18,24 +15,27 @@ class GpioR2ConfListView(ListView):
     def get(self, request, *args, **kwargs):
         if request.GET.get('light', None):
             pin = request.GET.get('pin')
-            light(pin, request.GET.get('light'))
+            pk = request.GET.get('pk')
+            light(pin, pk, request.GET.get('light'))
         return super(GpioR2ConfListView, self).get(request, *args, **kwargs)
 
 
-def light(pin, value):
+def light(pin, pk, value):
+    s = GpioR2.objects.get(id=pk)
     import RPi.GPIO as gpio
     if value == 'ON':
+        s.status = 'ON'
         print("Light on")
         gpio.setmode(gpio.BCM)
         gpio.setup(int(pin), gpio.OUT)
         gpio.output(int(pin), gpio.HIGH)
-
     elif value == 'OFF':
         print("Light off")
+        s.status = 'OFF'
         gpio.setmode(gpio.BCM)
         gpio.setup(int(pin), gpio.OUT)
         gpio.output(int(pin), gpio.LOW)
-
+    s.save()
 
 class GpioR2CreateView(CreateView):
     model = GpioR2
