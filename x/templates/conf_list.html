@@ -1,4 +1,11 @@
 {% extends "base.html" %}
+<style>
+    .panel{
+        width: 200px;
+        padding-top: 30px;
+        border-style: solid 1px;
+    }
+</style>
 {% block content %}
     {% for gpior2 in gpior2_list %}
             <div align="center" class="demo-card-event mdl-card mdl-shadow--2dp">
@@ -31,4 +38,13 @@
                 {% endif %}
             </div>
     {% endfor %}
+    <div class="mdl-cell mdl-cell--4--col">
+        <div class="panel">
+        <form action="{% url 'conf_list' %}" method="get">
+            <input type="hidden" value="4" name="pin">
+            <input type="hidden" value="11" name="dht">
+            <button type="submit" name="get_temp" value="misura" class="mdl-button mdl-js-button mdl-button--raised">Misura</button>
+        </form>
+            </div>
+    </div>
 {% endblock %}

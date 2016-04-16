@@ -9,10 +9,12 @@ class GpioR1Form(forms.ModelForm):
         model = GpioR1
         fields = ('text', 'pin', 'action', )
 
+
 class GpioR2Form(forms.ModelForm):
     class Meta:
         model = GpioR2
         fields = ('text', 'pin', 'action', )
+
 
 
 # class RegistrationForm(UserCreationForm):

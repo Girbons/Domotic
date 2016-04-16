@@ -1,11 +1,63 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block content %}
-<div class="demo-card-event mdl-card mdl-shadow--2dp">
-    <form method="POST">{% csrf_token %}
-        <input type="hidden" name="post">
-        {{ form.as_p}}
-    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Save</button>
-    </form>
+<div class="mdl-cell mdl-cell--4--col"></div>
+<div class="mdl-cell mdl-cell--4-col">
+    <div class="mdl-layout__header-row"></div>
+    <div class="demo-card-event mdl-card mdl-shadow--2dp">
+        <form method="POST">{% csrf_token %}
+            <input type="hidden" name="post">
+            <!--{{ form.as_p}}-->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="id_text">Configuration title</label>
+                    <input class="mdl-textfield__input" id="id_text" maxlength="50" name="text" type="text">
+
+                </div>
+                <p align="center">
+                <label for="id_pin">Pin:</label>
+                    <select class="mdl-button mdl-js-button mdl-button--raised" id="id_pin" name="pin">
+                        <option value="" selected="selected">---------</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="19">19</option>
+                        <option value="18">18</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                    </select>
+                </p>
+                <p align="center">
+                    <label for="id_action">Action:</label>
+                    <select class="mdl-button mdl-js-button mdl-button--raised" id="id_action" name="action">
+                        <option value="toggle light">toggle light</option>
+                        <option value="termos">termos</option>
+                    </select>
+                </p>
+                <div align="center">
+                    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Save</button>
+                </div>
+
+        </form>
+    </div>
 </div>
+<div class="mdl-cell mdl-cell--4-col"></div>
 {% endblock %}
