@@ -4,7 +4,8 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
     TemplateView
-from .models import GpioR1, GpioR2
+
+from .models import GpioR1, GpioR2, TemperatureSensor
 
 
 class GpioR2ConfListView(ListView):
@@ -26,7 +27,7 @@ class GpioR2ConfListView(ListView):
 
 def get_temp(pin, sensor):
     import sys
-    import Adafruit_Python_DHT.Adafruit_DHT as Adafruit_DHT
+    import Adafruit_DHT
 
     # Parse command line parameters.
     # sensor_args = {'11': Adafruit_DHT.DHT11,
@@ -136,3 +137,7 @@ class GpioR1CreateView(CreateView):
     def get_success_url(self):
         return reverse('conf_list')
 
+class TemperatureEditView(UpdateView):
+    model = TemperatureSensor
+    fields = ('pin', 'sensor', )
+    template_name = 'temperature_edit.html'

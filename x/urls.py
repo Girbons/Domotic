@@ -24,6 +24,8 @@ urlpatterns = [
         name='logout'),
     url('^accounts/profile/$', login_required(Profile.as_view()), name='profile'),
     url(r'^404/$', views.PageNotFoundView.as_view(), name='404'),
+    url(r'^configuration/sensor-temperature/(?P<pk>[0-9]+)/$', login_required(views.TemperatureEditView.as_view()),
+        name='temperature_edit'),
 
 
 ]
