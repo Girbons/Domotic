@@ -51,5 +51,5 @@ class TemperatureSensor(models.Model):
     VERSION = ((11, 11), (22, 22))
     pin = models.IntegerField(choices=CHOICES)
     sensor = models.IntegerField(choices=VERSION)
-    temperature = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
-    humidity = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    temperature = models.DecimalField(blank=True, max_digits=5, decimal_places=2, null=True)
+    humidity = models.DecimalField(blank=True, max_digits=5, decimal_places=2, null=True)

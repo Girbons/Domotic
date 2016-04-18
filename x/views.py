@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
     TemplateView
-
+# from .forms import RegistrationForm
 from .models import GpioR1, GpioR2, TemperatureSensor
 
 
@@ -21,14 +21,16 @@ class GpioR2ConfListView(ListView):
         elif request.GET.get('get_temp'):
             pin = request.GET.get('pin')
             sensor = request.GET.get('dht')
-            get_temp(pin, sensor)
+            pk = request.GET.get('pk')
+            get_temp(pin, sensor, pk)
         return super(GpioR2ConfListView, self).get(request, *args, **kwargs)
 
 
-def get_temp(pin, sensor):
+def get_temp(pin, sensor, pk):
     import sys
     import Adafruit_DHT
 
+    termos = TemperatureSensor.objects.get(id=pk)
     # Parse command line parameters.
     # sensor_args = {'11': Adafruit_DHT.DHT11,
     #                '22': Adafruit_DHT.DHT22,
@@ -54,6 +56,8 @@ def get_temp(pin, sensor):
     # If this happens try again!
     if humidity is not None and temperature is not None:
         print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
+        termos.temperature = temperature
+        termos.Humidity = humidity
     else:
         print('Failed to get reading. Try again!')
         sys.exit(1)
@@ -137,7 +141,15 @@ class GpioR1CreateView(CreateView):
     def get_success_url(self):
         return reverse('conf_list')
 
-class TemperatureEditView(UpdateView):
+
+class TemperatureListView(ListView):
     model = TemperatureSensor
-    fields = ('pin', 'sensor', )
-    template_name = 'temperature_edit.html'
+    queryset = TemperatureSensor.objects.all()
+    template_name = 'conf_list.html'
+
+# class Registration(CreateView):
+#      model = get_user_model()
+#      template_name = 'register.html'
+#      form_class = RegistrationForm
+#      def get_success_url(self):
+#         return reverse('login')

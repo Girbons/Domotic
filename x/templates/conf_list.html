@@ -1,54 +1,53 @@
 {% extends "base.html" %}
-<style>
-    .panel{
-        width: 200px;
-        padding-top: 30px;
-        border-style: solid 1px;
-    }
-</style>
+
 {% block content %}
+<style>
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.panel {
+  margin-left: 10px;
+}
+</style>
+<div class="container-fluid">
+<div class="row">
     {% for gpior2 in gpior2_list %}
-            <div align="center" class="demo-card-event mdl-card mdl-shadow--2dp">
+    <div class="col-sm-3">
+          <div class="panel panel-default">
+            <div align="center" class="panel-body">
                 <a href="{% url 'conf_detail' pk=gpior2.pk %}" ><p>{{ gpior2.text }}</p></a>
+                <p>Status: {{ gpior2.status }}</p>
                 <p>{{ gpior2.action }}</p>
-                  <table class="mdl-js-data-table">
-                      <thead>
-                        <tr>
-                          <th>Status</th>
-                          <th class="mdl-js-data-table" id="st">{{ gpior2.status }}
-                          </th>
-                        </tr>
-                      </thead>
-                    </table>
                 {% if gpior2.action == 'toggle light' %}
-                     <form action="{% url 'conf_list' %}" method="get">
+                     <form id="form" action="{% url 'conf_list' %}" method="get">
                         <input  type="hidden" value="{{ gpior2.pk }}" name="pk">
                         <input  type="hidden" value="{{ gpior2.pin }}" name="pin">
-                        <button type="submit" value="ON" name="light" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect">ON</button>
-                        <button type="submit" value="OFF" name="light" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect">OFF</button>
-                    </form>
-                {% endif %}
-                {% if gpior2.action == 'termos' %}
-                    <form action="{% url 'conf_list' %}" method="get">
-                        <input  type="hidden" value="{{ gpior2.pk }}" name="pk">
-                        <input  type="hidden" value="{{ gpior2.pin }}" name="pin">
-                        <button type="submit" value="ON" name="termos" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect">ON</button>
-                        <button type="submit" value="OFF" name="termos" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect">OFF</button>
+                        <button type="submit" class="btn btn-success btn-circle"name="light" value="ON">ON</button>
+                        <button type="submit" class="btn btn-danger btn-circle" name="light" value="OFF">OFF</button>
                     </form>
                 {% endif %}
             </div>
+          </div>
+        </div>
     {% endfor %}
-    <div class="mdl-cell mdl-cell--4--col">
-        <div class="panel">
-        <form action="{% url 'conf_list' %}" method="get">
-            <input type="hidden" value="4" name="pin">
-            <input type="hidden" value="11" name="dht">
-            <button type="submit" name="get_temp" value="misura" class="mdl-button mdl-js-button mdl-button--raised">Misura</button>
-        </form>
-            </div>
-        {% for temperaturesensor in temperaturesensor_list %}
-            {{ temperaturesensor.temperature }}
-            {{ temperaturesensor.humidity }}
-        {% endfor %}
-    </div>
+    {% for temperaturesensor in temperaturesensor_list %}
+      <form action="{% url 'conf_list' %}" method="get">
+        <input type="hidden" value="{{ temperaturesensor.pk }}" name="pk">
+        <input type="hidden" value="{{ temperaturesensor.pin }}" name="pin">
+        <input type="hidden" value="{{ temperaturesensor.sensor }}" name="dht">
+        <input type="submit" class="btn btn-succes">
+      </form>
+      <p>{{ temperaturesensor.pin }}</p>
+      <p>{{ temperaturesensor.sensor }}</p>
+      <p>{{ temperaturesensor.temperature }}</p>
+      <p>{{ temperaturesensor.humidity }}</p>
+    {% endfor %}
+  </div>
+  </div>
 {% endblock %}

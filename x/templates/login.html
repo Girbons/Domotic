@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--5-col"><div align="center" class="demo-card-event mdl-card mdl-shadow--2dp">
+<style>
+  .panel{
+    margin-top: 80px;
+    margin-right: 20px;
+  }
+</style>
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-4">
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -13,23 +19,24 @@
     <p>Please login to see this page.</p>
     {% endif %}
 {% endif %}
-
+<div class="panel panel-default">
+  <div class="panel-body">
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" id="id_username" name="username" type="text">
-        <label class="mdl-textfield__label" for="id_username">Username</label>
+    <div class="form-group">
+        <label for="id_username">Username</label>
+        <input class="form-control" id="id_username" name="username" type="text">
     </div>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" id="id_password" name="password" type="password">
-        <label class="mdl-textfield__label" for="id_password">Password</label>
+    <div class="form-group">
+        <label for="id_password">Password</label>
+        <input class="form-control" id="id_password" name="password" type="password">
     </div>
-    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" value="login" />
+    <input class="btn btn-success" type="submit" value="login" />
     <input type="hidden" name="next" value="{{ next }}" />
     </form>
-</div></div>
-  <div class="mdl-cell mdl-cell--2-col"></div>
-  <div class="mdl-cell mdl-cell--1-col"></div>
+  </body>
+</div>
+</div>
 </div>
 
 {% endblock %}

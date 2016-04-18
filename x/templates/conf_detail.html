@@ -1,15 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="mdl-cell mdl-cell--4--col">
+<div class="col-sm-4 col-sm-offset-4">
     {% if request.user.is_superuser %}
-        <a href="{% url 'conf_edit' pk=gpior2.pk %}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">EDIT</button></a>&nbsp;
-        <a href="{% url 'conf_delete' pk=gpior2.pk %}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">DELETE</button></a>&nbsp;
-    {% endif %}</div>
-<div class="mdl-cell mdl-cell--4--col">
-    <div class="mdl-layout__header-row"></div>
+        <a href="{% url 'conf_edit' pk=gpior2.pk %}"><button class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></button></a>&nbsp;
+        <a href="{% url 'conf_delete' pk=gpior2.pk %}"><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></a>
+    {% endif %}
         <h3>{{ gpior2.text }}</h3>
         <h3>Pin :{{ gpior2.pin }}</h3>
         <h3>Action: {{ gpior2.action }}</h3>
 </div>
-<div class="mdl-cell mdl-cell--4--col"></div>
-{% endblock %}
+{% endblock %}z
