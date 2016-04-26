@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container-fluid">
+  <script>
+  $(function() {
+    $( "#example" ).draggable();
+    $( "#example-2" ).draggable();
+  });
+  </script>
+{% for temperature in temperature_list %}
+      <form action="{% url 'conf_list' %}" method="get">
+        <input type="hidden" value="{{ temperature.pk }}" name="pk">
+        <input type="hidden" value="{{ temperature.pin }}" name="pin">
+        <input type="hidden" value="{{ temperature.sensor }}" name="dht">
+        <input type="submit" class="btn btn-succes">
+      </form>
+      <p>{{ temperature.pin }}</p>
+      <p>{{ temperature.sensor }}</p>
+      <p>{{ temperature.temperature }}</p>
+      <p>{{ temperature.humidity }}</p>
+
+
+<div class="container" id="example"><img src="{% static 'images/rsz_lavatrice.png' %}"></div>
+<div class="container" id="example-2"><img src="{% static 'images/rsz_tv.jpg' %}"></div>
+</div>
+{% endfor %}
+
+{% endblock %}

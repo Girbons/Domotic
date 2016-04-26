@@ -13,6 +13,7 @@
   <div class="panel panel-default">
     <div class="panel-body">
         <form method="POST">{% csrf_token %}
+            <!--{{ form.as_p }}-->
             <input type="hidden" name="post" value="{{ post.pk }}">
                 <div class="form-group">
                     <label for="id_text">Edit name</label>
@@ -51,6 +52,14 @@
                     </select>
                   </div>
                 <p>
+                <label for="id_image">Image:</label>
+                    <select class="btn btn-danger" id="id_image" name="image">
+                        <option value="1">Tv</option>
+                        <option value="2">Lavatrice</option>
+                        <option value="3">Lampadina</option>
+                    </select>
+                </p>
+                <p>
                     <label for="id_action">Edit Action</label>
                     <select class="btn btn-info" id="id_action" name="action">
                         <option value="toggle light">toggle light</option>
@@ -58,7 +67,7 @@
                     </select>
                 </p>
                 <div align="center">
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <input type="submit" class="btn btn-success">
                 </div>
 
         </form>

@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    .panel{
+        margin-top: 70px;
+    }
+</style>
 {% if next %}
     {% if user.is_authenticated %}
     <p></p>
@@ -10,8 +15,15 @@
 
 <form method="post" action="{% url 'django.contrib.auth.views.logout' %}">
 {% csrf_token %}
-    <p>Logged Out</p>
-    <a class="" href="{% url 'conf_list' %}">torna alla home</a>
+    <div class="col-sm-3 col-sm-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2 align="center">Logged Out</h2>
+                <div align="center"><a class="" href="{% url 'conf_list' %}">torna alla home</a></div>
+            </div>
+        </div>
+    </div>
+
 </form>
 
 {% endblock %}

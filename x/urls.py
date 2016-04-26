@@ -1,6 +1,8 @@
+from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+
 from django.template.backends import django
 from rest_framework import routers
 
@@ -24,6 +26,7 @@ urlpatterns = [
         name='logout'),
     url('^accounts/profile/$', login_required(Profile.as_view()), name='profile'),
     url(r'^404/$', views.PageNotFoundView.as_view(), name='404'),
-
+    url(r'^test/temperature/$', views.TemperatureListView.as_view(), name='prova'),
 
 ]
+

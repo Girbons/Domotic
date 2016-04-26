@@ -1,17 +1,25 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
+from django.shortcuts import render_to_response
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
     TemplateView
 # from .forms import RegistrationForm
-from .models import GpioR1, GpioR2, TemperatureSensor
+from .models import GpioR1, GpioR2, Temperature
+
 
 
 class GpioR2ConfListView(ListView):
     model = GpioR2
     queryset = GpioR2.objects.all()
     template_name = 'conf_list.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super(GpioR2ConfListView, self).get_context_data(**kwargs)
+        context.update({'temp': Temperature.objects.get(id=1)})
+        return context
 
     def get(self, request, *args, **kwargs):
         if request.GET.get('light', None):
@@ -30,30 +38,8 @@ def get_temp(pin, sensor, pk):
     import sys
     import Adafruit_DHT
 
-    termos = TemperatureSensor.objects.get(id=pk)
-    # Parse command line parameters.
-    # sensor_args = {'11': Adafruit_DHT.DHT11,
-    #                '22': Adafruit_DHT.DHT22,
-    #                '2302': Adafruit_DHT.AM2302}
-    # if len(sys.argv) == 3 and sys.argv[1] in sensor_args:
-    #     sensor = sensor_args[sys.argv[1]]
-    #     pin = sys.argv[2]
-    # else:
-    #     print('usage: sudo ./Adafruit_DHT.py [11|22|2302] GPIOpin#')
-    #     print('example: sudo ./Adafruit_DHT.py 2302 4 - Read from an AM2302 connected to GPIO #4')
-    #     sys.exit(1)
-
-    # Try to grab a sensor reading.  Use the read_retry method which will retry up
-    # to 15 times to get a sensor reading (waiting 2 seconds between each retry).
+    termos = Temperature.objects.get(id=pk)
     humidity, temperature = Adafruit_DHT.read_retry(int(sensor), int(pin))
-
-    # Un-comment the line below to convert the temperature to Fahrenheit.
-    # temperature = temperature * 9/5.0 + 32
-
-    # Note that sometimes you won't get a reading and
-    # the results will be null (because Linux can't
-    # guarantee the timing of calls to read the sensor).
-    # If this happens try again!
     if humidity is not None and temperature is not None:
         print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
         termos.temperature = temperature
@@ -80,9 +66,10 @@ def light(pin, pk, value):
         gpio.output(int(pin), gpio.LOW)
     s.save()
 
+
 class GpioR2CreateView(CreateView):
     model = GpioR2
-    fields = ('text', 'pin', 'action', )
+    fields = ('text', 'pin', 'action', 'image', )
     template_name = 'new_conf.html'
 
     def get_success_url(self):
@@ -101,7 +88,7 @@ class GpioR2DetailView(DetailView):
 
 class GpioR2ConfEditView(UpdateView):
     model = GpioR2
-    fields = ('text', 'pin', 'action', )
+    fields = ('text', 'pin', 'action', 'image', )
     template_name = 'conf_edit.html'
 
     def get_success_url(self):
@@ -143,9 +130,11 @@ class GpioR1CreateView(CreateView):
 
 
 class TemperatureListView(ListView):
-    model = TemperatureSensor
-    queryset = TemperatureSensor.objects.all()
-    template_name = 'conf_list.html'
+    model = Temperature
+    queryset = Temperature.objects.all()
+    template_name = 'prova.html'
+
+
 
 # class Registration(CreateView):
 #      model = get_user_model()
@@ -153,3 +142,4 @@ class TemperatureListView(ListView):
 #      form_class = RegistrationForm
 #      def get_success_url(self):
 #         return reverse('login')
+

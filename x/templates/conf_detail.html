@@ -1,12 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    .panel{
+        margin-top: 70px;
+    }
+
+</style>
 <div class="col-sm-4 col-sm-offset-4">
-    {% if request.user.is_superuser %}
-        <a href="{% url 'conf_edit' pk=gpior2.pk %}"><button class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></button></a>&nbsp;
-        <a href="{% url 'conf_delete' pk=gpior2.pk %}"><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></a>
-    {% endif %}
-        <h3>{{ gpior2.text }}</h3>
-        <h3>Pin :{{ gpior2.pin }}</h3>
-        <h3>Action: {{ gpior2.action }}</h3>
+     {% if request.user.is_superuser %}
+                    <div align="right"><a href="{% url 'conf_edit' pk=gpior2.pk %}"><button class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></button></a></div>
+                    <div align="right"><a href="{% url 'conf_delete' pk=gpior2.pk %}"><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></a></div>
+            {% endif %}
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Pin</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ gpior2.text }}</td>
+                    <td>{{ gpior2.pin }}</td>
+                    <td>{{ gpior2.action }}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
 </div>
 {% endblock %}z

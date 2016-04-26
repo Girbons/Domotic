@@ -14,40 +14,78 @@
 .panel {
   margin-left: 10px;
 }
+
+.container-temp {
+    width: 203px;
+    height: 209px;
+    margin-left: 10px;
+}
+
+.temp-body{
+    padding-top: 30px;
+    padding-left: 30px;
+}
 </style>
+<script>
+    
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript">
+      google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var temperature = {{ temp.temperature }};
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Temperature',  temperature],
+        ]);
+
+        var options = {
+          width: 400, height: 120,
+          redFrom: 90, redTo: 100,
+          yellowFrom:75, yellowTo: 90,
+          minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
 <div class="container-fluid">
-<div class="row">
-    {% for gpior2 in gpior2_list %}
-    <div class="col-sm-3">
-          <div class="panel panel-default">
-            <div align="center" class="panel-body">
-                <a href="{% url 'conf_detail' pk=gpior2.pk %}" ><p>{{ gpior2.text }}</p></a>
-                <p>Status: {{ gpior2.status }}</p>
-                <p>{{ gpior2.action }}</p>
-                {% if gpior2.action == 'toggle light' %}
-                     <form id="form" action="{% url 'conf_list' %}" method="get">
-                        <input  type="hidden" value="{{ gpior2.pk }}" name="pk">
-                        <input  type="hidden" value="{{ gpior2.pin }}" name="pin">
-                        <button type="submit" class="btn btn-success btn-circle"name="light" value="ON">ON</button>
-                        <button type="submit" class="btn btn-danger btn-circle" name="light" value="OFF">OFF</button>
-                    </form>
-                {% endif %}
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="container-temp">
+                <div class="temp-body">
+                    <form action="{% url 'conf_list' %}" method="get">
+                    <input type="hidden" value="{{ temp.pk }}" name="pk">
+                    <input type="hidden" value="{{ temp.sensor }}" name="dht">
+                    <input type="hidden" value="{{ temp.pin }}" name="pin">
+                    <div id="chart_div" style="width: 300px; height: 120px;"></div>
+                    <input type="submit" name="get_temp" class="btn  btn-success" value="Misura"/>
+                </form>
+                </div>
             </div>
-          </div>
+        </div>
+        {% for gpior2 in gpior2_list %}
+        <div class="col-sm-3">
+              <div class="panel panel-default">
+                <div align="center" class="panel-body">
+                    <a href="{% url 'conf_detail' pk=gpior2.pk %}" ><p>{{ gpior2.text }}</p></a>
+                    <p>Status: {{ gpior2.status }}</p>
+                    <img src="{{ gpior2.image.image.url }}" class="img-responsive" />
+                    {% if gpior2.action == 'toggle light' %}
+                         <form action="{% url 'conf_list' %}" method="get">
+                            <input  type="hidden" value="{{ gpior2.pk }}" name="pk">
+                            <input  type="hidden" value="{{ gpior2.pin }}" name="pin">
+                            <button type="submit" class="btn btn-success btn-circle"name="light" value="ON">ON</button>
+                            <button type="submit" class="btn btn-danger btn-circle" name="light" value="OFF">OFF</button>
+                        </form>
+                    {% endif %}
+                </div>
+              </div>
         </div>
     {% endfor %}
-    {% for temperaturesensor in temperaturesensor_list %}
-      <form action="{% url 'conf_list' %}" method="get">
-        <input type="hidden" value="{{ temperaturesensor.pk }}" name="pk">
-        <input type="hidden" value="{{ temperaturesensor.pin }}" name="pin">
-        <input type="hidden" value="{{ temperaturesensor.sensor }}" name="dht">
-        <input type="submit" class="btn btn-succes">
-      </form>
-      <p>{{ temperaturesensor.pin }}</p>
-      <p>{{ temperaturesensor.sensor }}</p>
-      <p>{{ temperaturesensor.temperature }}</p>
-      <p>{{ temperaturesensor.humidity }}</p>
-    {% endfor %}
   </div>
-  </div>
+</div>
 {% endblock %}

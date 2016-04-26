@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+
+{% load staticfiles %}
 <style>
 .panel{
   margin-top: 50px;
@@ -7,28 +9,25 @@
 </style>
 <div class="container-fluid">
   <div class="col-sm-4">
-    <img src="http://placehold.it/250x250" class="img-circle">
+    <img src="{% static 'images/rsz_mou.jpg' %}" class="img-circle">
   </div>
   <div class="col-sm-4">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <table class="table table-striped">
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>Name</th>
-              <th>Username</th>
               <th>Email</th>
+              <th>Username</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>{{ user.get_name }}</td>
-              <td>{{ user.get_username }}</h3>
-                <td>{{ request.user.email }}</h3>
-                </tr>
-              </tbody>
-            </div>
-          </div>
-        </div>
+              <td>{{ request.get_lastname }}</td>
+              <td>{{ request.user.email }}</td>
+              <td>{{ user.get_username }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      {% endblock %}
+</div>
+{% endblock %}
