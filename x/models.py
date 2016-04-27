@@ -22,6 +22,7 @@ class Gpio(models.Model):
 class Icon(models.Model):
     text = models.CharField(max_length=30, default='')
     image = models.ImageField(upload_to="media_foto")
+    id_icon = models.CharField(max_length=3, default='')
 
     def __str__(self):
         return self.text

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load staticfiles %}
 {% block content %}
 <style>
 .btn-circle {
@@ -25,6 +25,50 @@
     padding-top: 30px;
     padding-left: 30px;
 }
+.material-switch > input[type="checkbox"] {
+    display: none;
+}
+
+.material-switch > label {
+    cursor: pointer;
+    height: 0px;
+    position: relative;
+    width: 40px;
+}
+
+.material-switch > label::before {
+    background: rgb(0, 0, 0);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    content: '';
+    height: 16px;
+    margin-top: -8px;
+    position:absolute;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+    width: 40px;
+}
+.material-switch > label::after {
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 24px;
+    left: -4px;
+    margin-top: -8px;
+    position: absolute;
+    top: -4px;
+    transition: all 0.3s ease-in-out;
+    width: 24px;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+    background: inherit;
+    opacity: 0.5;
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+    background: inherit;
+    left: 20px;
+}
 </style>
 <script>
     
@@ -35,10 +79,22 @@
       google.charts.load('current', {'packages':['gauge']});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
-        var temperature = {{ temp.temperature }};
+        {% if temp.temperature == None %}
+            var temperature = 0;
+        {% else %}
+            var temperature = {{ temp.temperature }};
+        {% endif %}
+
+        {% if temp.humidity == None %}
+            var hum = 0;
+        {% else %}
+            var hum = {{ temp.humidity }};
+        {% endif %}
+
         var data = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
           ['Temperature',  temperature],
+          ['Humidity', hum],
         ]);
 
         var options = {
@@ -52,40 +108,84 @@
         chart.draw(data, options);
       }
     </script>
+<!--<div class="container-fluid">-->
+    <!--<div class="row">-->
+        <!--<div class="col-sm-4 col-sm-offset-4">-->
+            <!--<div class="container-temp">-->
+                <!--<div class="temp-body">-->
+                    <!--<form action="{% url 'conf_list' %}" method="get">-->
+                    <!--<input type="hidden" value="{{ temp.pk }}" name="pk">-->
+                    <!--<input type="hidden" value="{{ temp.sensor }}" name="dht">-->
+                    <!--<input type="hidden" value="{{ temp.pin }}" name="pin">-->
+                    <!--<div id="chart_div" style="width: 100px; height: 120px;"></div>-->
+                    <!--<div align="center"><input type="submit" name="get_temp" class="btn  btn-success" value="Misura"/></div>-->
+                <!--</form>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+        <!--{% for gpior2 in gpior2_list %}-->
+        <!--<div class="col-sm-3">-->
+              <!--<div class="panel panel-default">-->
+                <!--<div align="center" class="panel-body">-->
+                    <!--<a href="{% url 'conf_detail' pk=gpior2.pk %}" ><p>{{ gpior2.text }}</p></a>-->
+                    <!--<p>Status: {{ gpior2.status }}</p>-->
+                    <!--<img src="{{ gpior2.image.image.url }}" class="img-responsive" />-->
+                    <!--{% if gpior2.action == 'toggle light' %}-->
+                         <!--<form action="{% url 'conf_list' %}" method="get">-->
+                            <!--<input  type="hidden" value="{{ gpior2.pk }}" name="pk">-->
+                            <!--<input  type="hidden" value="{{ gpior2.pin }}" name="pin">-->
+                            <!--<button type="submit" class="btn btn-success btn-circle"name="light" value="ON">ON</button>-->
+                            <!--<button type="submit" class="btn btn-danger btn-circle" name="light" value="OFF">OFF</button>-->
+                        <!--</form>-->
+                    <!--{% endif %}-->
+                <!--</div>-->
+              <!--</div>-->
+        <!--</div>-->
+    <!--{% endfor %}-->
+  <!--</div>-->
+<!--</div>-->
+<script>
+    $(document).ready(function () {
+    $('#toolbar').hide();
+        $('#switch').change(function () {
+
+            if (this.checked) {
+                $('#toolbar').fadeIn(2050);
+                $('#classicDiv').fadeIn(2050);
+            }
+            else {
+                $('#toolbar').fadeOut();
+                $('#classiDiv').fadeOut();
+            }
+        });
+    });
+</script>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2">
-            <div class="container-temp">
-                <div class="temp-body">
-                    <form action="{% url 'conf_list' %}" method="get">
-                    <input type="hidden" value="{{ temp.pk }}" name="pk">
-                    <input type="hidden" value="{{ temp.sensor }}" name="dht">
-                    <input type="hidden" value="{{ temp.pin }}" name="pin">
-                    <div id="chart_div" style="width: 300px; height: 120px;"></div>
-                    <input type="submit" name="get_temp" class="btn  btn-success" value="Misura"/>
-                </form>
-                </div>
-            </div>
+        <div class="material-switch">
+            <input id="switch" name="someSwitchOption001" type="checkbox"/>
+            <label for="switch" class="label-primary"></label>
         </div>
-        {% for gpior2 in gpior2_list %}
-        <div class="col-sm-3">
-              <div class="panel panel-default">
-                <div align="center" class="panel-body">
-                    <a href="{% url 'conf_detail' pk=gpior2.pk %}" ><p>{{ gpior2.text }}</p></a>
-                    <p>Status: {{ gpior2.status }}</p>
-                    <img src="{{ gpior2.image.image.url }}" class="img-responsive" />
-                    {% if gpior2.action == 'toggle light' %}
-                         <form action="{% url 'conf_list' %}" method="get">
-                            <input  type="hidden" value="{{ gpior2.pk }}" name="pk">
-                            <input  type="hidden" value="{{ gpior2.pin }}" name="pin">
-                            <button type="submit" class="btn btn-success btn-circle"name="light" value="ON">ON</button>
-                            <button type="submit" class="btn btn-danger btn-circle" name="light" value="OFF">OFF</button>
-                        </form>
-                    {% endif %}
-                </div>
-              </div>
+    </div>
+    <div class="row">
+        <div id="toolbar" class="col-sm-2">
+            {% for gpior2 in gpior2_list %}
+            <script>
+                $(function() {
+                    $( "#{{ gpior2.image.id_icon }}" ).draggable();
+                  });
+            </script>
+
+                <img id="{{ gpior2.image.id_icon }}" src="{{ gpior2.image.image.url }}"/>
+
+            {% endfor %}
         </div>
-    {% endfor %}
-  </div>
+        <div class="col-sm-8 col-sm-offset-1">
+            <img class="img-responsive" src="{% static 'images/maps.jpg' %}"/>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
