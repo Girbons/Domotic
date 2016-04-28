@@ -9,12 +9,10 @@ from django.views.generic import CreateView, ListView, DetailView, UpdateView, D
 from .models import GpioR1, GpioR2, Temperature
 
 
-
 class GpioR2ConfListView(ListView):
     model = GpioR2
     queryset = GpioR2.objects.all()
     template_name = 'conf_list.html'
-
 
     def get_context_data(self, **kwargs):
         context = super(GpioR2ConfListView, self).get_context_data(**kwargs)

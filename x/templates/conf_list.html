@@ -7,7 +7,7 @@
 </style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-   <script type="text/javascript">
+<script type="text/javascript">
       google.charts.load('current', {'packages':['gauge']});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
@@ -42,73 +42,73 @@
     </script>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-1 col-xs-1">
+        <div class="col-sm-4">
             <div class="container-temp">
-                <div id="chart_div" style="width: 100px; height: 120px;"></div>
+                <form action="{% url 'conf_list' %}" method="get">
+                    <input type="hidden" value="{{ temp.pk }}" name="pk">
+                    <input type="hidden" value="{{ temp.sensor }}" name="dht">
+                    <input type="hidden" value="{{ temp.pin }}" name="pin">
+                    <button value="invia" type="submit" name="get_temp" class="btn btn-default"><img width="20" height="25" class="img-responsive" src="{% static 'images/termometro.png' %}"></button>
+                    <div id="chart_div" style="width: 100px; height: 120px;"></div>
+                </form>
             </div>
             <div class="container-table">
+            <div class="table-responsive">
                 <table class="table table-bordered">
-                <thead>
+                    <thead>
                     <tr>
                         <th>Room</th>
                         <th>Item</th>
                         <th>Status</th>
-                        <th>Switch</th>
+                        <th>Control</th>
                     </tr>
-                </thead>
-                <tbody>
-                {% for gpior2 in gpior2_list %}
+                    </thead>
+                    <tbody>
+                    {% for gpior2 in gpior2_list %}
                     <tr>
-                        <td></td>
-                        <td>{{ gpior2.text }}</td>
-                        {% if gpior2.status == "UNDEFINED" %}
-                            <td>UNKNOWN</td>
-                        {% else %}
-                            {% if gpior2.status == "ON" %}
-                                <td bgcolor="#00FF00">{{ gpior2.status }}</td>
-                            {% else %}
-                                <td bgcolor="#FF0000">{{ gpior2.status }}</td>
-                            {% endif %}
+                        <td>{{ gpior2.room }}</td>
+                        <td>{{ gpior2.item }}</td>
+                        {% if gpior2.status == "ON" %}
+                            <td bgcolor="#00FF00">{{ gpior2.status }}</td>
+                        {% elif gpior2.status == "OFF" %}
+                            <td bgcolor="#FF0000">{{ gpior2.status }}</td>
+                        {% elif gpior2.status == "UNDEFINED" %}
+                            <td>Undefined</td>
                         {% endif %}
-                        <td class="material-switch">
-                                <input id="{{ gpior2.image.text }}" name="{{ gpior2.image.text }}" type="checkbox"/>
-                                <label for="{{ gpior2.image.text }}" class="label-default"></label>
+                        <td>
+                        <form action="{% url 'conf_list' %}" method="get">
+                            <input  type="hidden" value="{{ gpior2.pk }}" name="pk">
+                            <input  type="hidden" value="{{ gpior2.pin }}" name="pin">
+                            <button type="submit" class="btn btn-success btn-circle"name="light" value="ON">ON</button>
+                           <button type="submit" class="btn btn-danger btn-circle" name="light" value="OFF">OFF</button>
+                        </form>
                         </td>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
-                        <div class="material-switch pull-right">
-                            <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox"/>
-                            <label for="someSwitchOptionDefault" class="label-default"></label>
-                        </div>
-
-        </div>
-        <div class="col-sm-8 col-sm-offset-1">
-            <div class="container-map">
-                <img src="{% static 'images/map.jpg' %}"/>
             </div>
-        </div>
-        <div id="toolbar" class="col-sm-1">
-            {% for gpior2 in gpior2_list %}
-            <script>
+            </div>
+            <div class="col-sm-7">
+                <div class="container-map">
+                    <img class="img-responsive" src="{% static 'images/map.jpg' %}"/>
+                </div>
+            </div>
+            <div id="toolbar" class="col-sm-1">
+                {% for gpior2 in gpior2_list %}
+                <script>
                 $(function() {
                     $( "#{{ gpior2.image.id_icon }}" ).draggable();
                   });
             </script>
-            <div id="{{ gpior2.image.id_icon }}">
-                <div class="container-icon">
-                <img  src="{{ gpior2.image.image.url }}"/>
-                <!--<form action="{% url 'conf_list' %}" method="get">-->
-                    <!--<input  type="hidden" value="{{ gpior2.pk }}" name="pk">-->
-                    <!--<input  type="hidden" value="{{ gpior2.pin }}" name="pin">-->
-                    <!--<button type="submit" class="btn btn-success btn-circle"name="light" value="ON">ON</button>-->
-                    <!--<button type="submit" class="btn btn-danger btn-circle" name="light" value="OFF">OFF</button>-->
-                <!--</form>-->
+                <div id="{{ gpior2.image.id_icon }}">
+                    <div class="container-icon">
+                        <img class="img-responsive"  src="{{ gpior2.image.image.url }}"/>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-        </div>
-            {% endfor %}
         </div>
     </div>
 </div>
