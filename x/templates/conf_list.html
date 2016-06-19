@@ -1,115 +1,54 @@
 {% extends "base.html" %}
-{% load staticfiles %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'custom.css' %}">
 <style>
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
 
 </style>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-      google.charts.load('current', {'packages':['gauge']});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        {% if temp.temperature == None %}
-            var temperature = 0;
-        {% else %}
-            var temperature = {{ temp.temperature }};
-        {% endif %}
-
-        {% if temp.humidity == None %}
-            var hum = 0;
-        {% else %}
-            var hum = {{ temp.humidity }};
-        {% endif %}
-
-        var data = google.visualization.arrayToDataTable([
-          ['Label', 'Value'],
-          ['Temperature',  temperature],
-          ['Humidity', hum],
-        ]);
-
-        var options = {
-          width: 400, height: 120,
-          redFrom: 90, redTo: 100,
-          yellowFrom:75, yellowTo: 90,
-          minorTicks: 5
-        };
-
-        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-4">
-            <div class="container-temp">
-                <form action="{% url 'conf_list' %}" method="get">
-                    <input type="hidden" value="{{ temp.pk }}" name="pk">
-                    <input type="hidden" value="{{ temp.sensor }}" name="dht">
-                    <input type="hidden" value="{{ temp.pin }}" name="pin">
-                    <button value="invia" type="submit" name="get_temp" class="btn btn-default"><img width="20" height="25" class="img-responsive" src="{% static 'images/termometro.png' %}"></button>
-                    <div id="chart_div" style="width: 100px; height: 120px;"></div>
-                </form>
-            </div>
-            <div class="container-table">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Room</th>
-                        <th>Item</th>
-                        <th>Status</th>
-                        <th>Control</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for gpior2 in gpior2_list %}
-                    <tr>
-                        <td>{{ gpior2.room }}</td>
-                        <td>{{ gpior2.item }}</td>
-                        {% if gpior2.status == "ON" %}
-                            <td bgcolor="#00FF00">{{ gpior2.status }}</td>
-                        {% elif gpior2.status == "OFF" %}
-                            <td bgcolor="#FF0000">{{ gpior2.status }}</td>
-                        {% elif gpior2.status == "UNDEFINED" %}
-                            <td>Undefined</td>
-                        {% endif %}
-                        <td>
-                        <form action="{% url 'conf_list' %}" method="get">
+        {% for gpior2 in gpior2_list %}
+        <div class="col-sm-2">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form action="{% url 'conf_list' %}" method="get">
+                        <div align="center">
+                            <h4>{{ gpior2.room }}</h4>
+                            <h4>{{ gpior2.item }}</h4>
+                            <h4>{{ gpior2.status }}</h4>
                             <input  type="hidden" value="{{ gpior2.pk }}" name="pk">
                             <input  type="hidden" value="{{ gpior2.pin }}" name="pin">
                             <button type="submit" class="btn btn-success btn-circle"name="light" value="ON">ON</button>
-                           <button type="submit" class="btn btn-danger btn-circle" name="light" value="OFF">OFF</button>
-                        </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            </div>
-            </div>
-            <div class="col-sm-7">
-                <div class="container-map">
-                    <img class="img-responsive" src="{% static 'images/map.jpg' %}"/>
+                            <button type="submit" class="btn btn-danger btn-circle" name="light" value="OFF">OFF</button>
+                        </div>
+                    </form>
                 </div>
-            </div>
-            <div id="toolbar" class="col-sm-1">
-                {% for gpior2 in gpior2_list %}
-                <script>
-                $(function() {
-                    $( "#{{ gpior2.image.id_icon }}" ).draggable();
-                  });
-            </script>
-                <div id="{{ gpior2.image.id_icon }}">
-                    <div class="container-icon">
-                        <img class="img-responsive"  src="{{ gpior2.image.image.url }}"/>
-                    </div>
-                </div>
-                {% endfor %}
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

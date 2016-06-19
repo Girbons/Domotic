@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+
+</style>
+<div class="container-fluid">
+    <div class="row">
+        {% for gpior2 in gpior2_list %}
+        <div class="col-sm-2">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form action="{% url 'conf_list' %}" method="get">
+                        <div align="center">
+                            <h4>{{ gpior2.room }}</h4>
+                            <h4>{{ gpior2.item }}</h4>
+                            <input  type="hidden" value="{{ gpior2.pk }}" name="pk">
+                            <input  type="hidden" value="{{ gpior2.pin }}" name="pin">
+                            <button type="submit" class="btn btn-success "name="light" value="ON">UNLOCK</button>
+                            <button type="submit" class="btn btn-danger " name="light" value="OFF">LOCK</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

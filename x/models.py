@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Gpio(models.Model):
     STATE = (
         ('gpio.HIGH', 'HIGH'),
@@ -10,6 +9,9 @@ class Gpio(models.Model):
 
     ACTIONS = (
         ('toggle light', 'toggle light'),
+        ('temperature', 'temperature'),
+        ('lock', 'lock'),
+        ('camera', 'camera'),
     )
 
     STATUS = (
@@ -19,49 +21,36 @@ class Gpio(models.Model):
     )
 
 
-class Icon(models.Model):
-    text = models.CharField(max_length=20, default='')
-    image = models.ImageField(upload_to="media_foto")
-    id_icon = models.CharField(max_length=5, default='', unique=True)
+class Room(models.Model):
+    name = models.CharField(max_length=70, blank=False, null=False)
 
     def __str__(self):
-        return self.text
-
-
-class GpioR1(models.Model):
-    CHOICES = ((0, 0), (1, 1), (4, 4), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (14, 14),
-                (15, 15), (18, 18), (21, 21), (22, 22), (23, 23), (24, 24), (25, 25))
-    text = models.CharField(max_length=50, default='')
-    pin = models.IntegerField(choices=CHOICES)
-    action = models.CharField(choices=Gpio.ACTIONS, max_length=30, default='')
-    version = models.CharField(default='RASPBERRY 1', max_length=18)
-
-    def __str__(self):
-        return self.text
+        return self.name
 
 
 class GpioR2(models.Model):
     CHOICES = ((2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (12, 12),  (13, 13),
                (14, 14), (15, 15), (16, 16), (17, 17), (19, 19), (18, 18), (20, 20), (21, 21), (22, 22), (23, 23),
                (24, 24), (25, 25), (26, 26), (27, 27))
-    room = models.CharField(max_length=30, default='')
+    room = models.ForeignKey(Room)
     item = models.CharField(max_length=50, default='')
     pin = models.IntegerField(choices=CHOICES)
     action = models.CharField(choices=Gpio.ACTIONS, max_length=30, default='')
-    version = models.CharField(default='RASPBERRY 2', max_length=18)
     status = models.CharField(choices=Gpio.STATUS, default='', max_length=10, )
-    image = models.ForeignKey(Icon, default='')
 
     def __str__(self):
-        return self.room
+        return self.item
+
+
+class MqttBroker(models.Model):
+    host = models.TextField()
+    port = models.IntegerField()
+    username = models.CharField(blank=False, null=False, default='', max_length=30)
+    password = models.TextField()
+    topic = models.CharField(max_length=200, blank=False, null=False)
 
 
 class Temperature(models.Model):
-    CHOICES = ((2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (12, 12), (13, 13),
-               (14, 14), (15, 15), (16, 16), (17, 17), (19, 19), (18, 18), (20, 20), (21, 21), (22, 22), (23, 23),
-               (24, 24), (25, 25), (26, 26), (27, 27))
-    VERSION = ((11, 11), (22, 22))
-    pin = models.IntegerField(choices=CHOICES)
-    sensor = models.IntegerField(choices=VERSION)
-    temperature = models.DecimalField(blank=True, max_digits=5, decimal_places=2, null=True)
-    humidity = models.DecimalField(blank=True, max_digits=5, decimal_places=2, null=True)
+    room = models.ForeignKey(Room, blank=False)
+    temperature = models.FloatField(blank=True, null=True)
+    data = models.ForeignKey(MqttBroker, blank=True, null=True)

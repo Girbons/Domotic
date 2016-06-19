@@ -1,26 +1,17 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.forms import fields
-from django.contrib.auth.models import User
-from .models import GpioR1, GpioR2, Temperature
-
-
-class GpioR1Form(forms.ModelForm):
-    class Meta:
-        model = GpioR1
-        fields = ('text', 'pin', 'action', )
+from .models import GpioR2, Temperature
 
 
 class GpioR2Form(forms.ModelForm):
     class Meta:
         model = GpioR2
-        fields = ('text', 'pin', 'action', 'image', )
+        fields = ('room', 'item', 'pin', 'action', )
 
 
 class SensorForm(forms.ModelForm):
     class Meta:
         model = Temperature
-        fields = ('pin', 'sensor', )
+        fields = ('room', 'data', )
 
 # class RegistrationForm(UserCreationForm):
 #     email = fields.EmailField()
