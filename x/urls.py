@@ -15,12 +15,6 @@ urlpatterns = [
     url(r'^lock-control/$', login_required(views.LockListView.as_view()), name='lock_list'),
     url(r'^temperature-control/$', login_required(views.TemperatureListView.as_view()), name='temp'),
     url(r'^configuration/new/$', login_required(views.GpioR2CreateView.as_view()), name='new_conf'),
-    url(r'^configuration/(?P<pk>[0-9]+)/detail/$', login_required(views.GpioR2DetailView.as_view()),
-        name='conf_detail'),
-    url(r'^configuration/(?P<pk>[0-9]+)/edit/$', login_required(views.GpioR2ConfEditView.as_view()),
-        name='conf_edit'),
-    url(r'^configuration/(?P<pk>[0-9]+)/delete/$', login_required(views.GpioR2ConfDeleteView.as_view()),
-        name='conf_delete'),
     # url(r'^accounts/register/$', views.Registration.as_view(), name='register'),
     url(r'^accounts/login/$', auth_views.login, {'template_name': 'login.html'},
         name='login'),
@@ -30,5 +24,12 @@ urlpatterns = [
     url(r'^404/$', views.PageNotFoundView.as_view(), name='404'),
     url(r'^$', login_required(views.HomepageView.as_view()), name='homepage'),
     url(r'^settings/$', login_required(views.SettingsView.as_view()), name='settings')
+
+    # url(r'^configuration/(?P<pk>[0-9]+)/detail/$', login_required(views.GpioR2DetailView.as_view()),
+    #     name='conf_detail'),
+    # url(r'^configuration/(?P<pk>[0-9]+)/edit/$', login_required(views.GpioR2ConfEditView.as_view()),
+    #     name='conf_edit'),
+    # url(r'^configuration/(?P<pk>[0-9]+)/delete/$', login_required(views.GpioR2ConfDeleteView.as_view()),
+    #     name='conf_delete'),
 ]
 

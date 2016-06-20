@@ -10,7 +10,7 @@ class Gpio(models.Model):
     ACTIONS = (
         ('toggle light', 'toggle light'),
         ('lock', 'lock'),
-        ('camera', 'camera'),
+        # ('camera', 'camera'),
     )
 
     STATUS = (

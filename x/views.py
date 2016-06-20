@@ -26,7 +26,13 @@ class LockListView(ListView):
     model = GpioR2
     template_name = 'lock_list.html'
     queryset = GpioR2.objects.filter(action='lock')
-
+    
+    def get(self, request, *args, **kwargs):
+        if request.GET.get('light', None):
+            pin = request.GET.get('pin')
+            pk = request.GET.get('pk')
+            light(pin, pk, request.GET.get('light'))
+        return super(LockListView, self).get(request, *args, **kwargs)
 
 class TemperatureListView(ListView):
     model = Temperature
@@ -64,7 +70,7 @@ class GpioR2CreateView(CreateView):
     template_name = 'new_conf.html'
 
     def get_success_url(self):
-        return reverse('homepage')
+        return reverse('settings')
 
     @method_decorator(permission_required('x.add_gpior2'))
     def dispatch(self, *args, **kwargs):
@@ -95,7 +101,7 @@ class GpioR2ConfDeleteView(DeleteView):
     template_name = 'conf_confirm_delete.html'
 
     def get_success_url(self):
-        return reverse('conf_list')
+        return reverse('settings')
 
     @method_decorator(permission_required('x.delete_gpior2'))
     def dispatch(self, request, *args, **kwargs):
@@ -117,6 +123,12 @@ class HomepageView(TemplateView):
 
 class SettingsView(TemplateView):
     template_name = 'settings.html'
+
+
+
+#TODO view for delete and edit the configuration
+# class SettingsEditView(ListView):
+#     model = GpioR2
 
 # class Registration(CreateView):
 #      model = get_user_model()
