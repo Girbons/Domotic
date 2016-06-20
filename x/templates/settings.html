@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div align="right">
+                              <div class="dropdown">
+                               <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                  <li><a href="#">Edit configuration</a></li>
+                                  <li><a href="#">Delete configuration</a></li>
+                                </ul>
+                              </div>
+                        </div>
+                        <div align="center">
+                            <a href=""><img class="img-responsive" width="240" height="240" src="{% static 'light-bulb.svg' %}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div align="right">
+                              <div class="dropdown">
+                               <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                  <li><a href="#">Edit configuration</a></li>
+                                  <li><a href="#">Delete configuration</a></li>
+                                </ul>
+                              </div>
+                        </div>
+                        <div align="center">
+                            <a href=""><img class="img-responsive" width="240" height="240" src="{% static 'lock.svg' %}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div align="right">
+                              <div class="dropdown">
+                               <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                  <li><a href="#">Edit configuration</a></li>
+                                  <li><a href="#">Delete configuration</a></li>
+                                </ul>
+                              </div>
+                        </div>
+                        <div align="center">
+                            <a href=""><img class="img-responsive" width="240" height="240" src="{% static 'temperature.svg' %}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div align="right">
+                              <div class="dropdown">
+                               <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                  <li class="disabled"><a href="#">Edit configuration</a></li>
+                                  <li class="disabled"><a href="#">Delete configuration</a></li>
+                                </ul>
+                              </div>
+                        </div>
+                        <div align="center">
+                            <a href=""><img class="img-responsive" width="240" height="240" src="{% static 'security-camera.svg' %}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div align="right">
+                              <div class="dropdown">
+                               <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                  <li class="disabled"><a href="#">Edit username</a></li>
+                                  <li class="disabled"><a href="#">Edit email</a></li>
+                                  <li class="disabled"><a href="#">Edit password</a></li>
+                                </ul>
+                              </div>
+                        <div align="center">
+                            <a href=""><img class="img-responsive" width="240" height="240" src="{% static 'user.svg' %}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div align="center">
+                            <a href="{% url 'new_conf' %}"><img class="img-responsive" width="240" height="250" src="{% static 'plusd.svg' %}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

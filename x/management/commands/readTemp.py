@@ -1,4 +1,6 @@
 from optparse import make_option
+
+from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand, CommandError
 from django.shortcuts import get_object_or_404
 
@@ -44,3 +46,4 @@ class Command(BaseCommand):
             client.connect(broker.host, broker.port, 60)
             client.on_message = on_message
             client.loop_forever()
+

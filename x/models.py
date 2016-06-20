@@ -9,7 +9,6 @@ class Gpio(models.Model):
 
     ACTIONS = (
         ('toggle light', 'toggle light'),
-        ('temperature', 'temperature'),
         ('lock', 'lock'),
         ('camera', 'camera'),
     )

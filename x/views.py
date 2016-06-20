@@ -1,8 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
-from django.http import request
-from django.shortcuts import render_to_response
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
     TemplateView
@@ -37,29 +35,33 @@ class TemperatureListView(ListView):
 
 
 def light(pin, pk, value):
-    s = GpioR2.objects.get(id=pk)
-    import RPi.GPIO as gpio
-    check = True
-    if value == 'ON':
-        s.status = 'ON'
-        print("Light on")
-        gpio.setmode(gpio.BCM)
-        gpio.setup(int(pin), gpio.OUT)
-        gpio.output(int(pin), gpio.HIGH)
-    elif value == 'OFF':
-        print("Light off")
-        s.status = 'OFF'
-        gpio.setmode(gpio.BCM)
-        gpio.setup(int(pin), gpio.OUT)
-        gpio.output(int(pin), gpio.LOW)
-    s.save()
+    check = False
+
+    try:
+        import RPi.GPIO as gpio
+        check = True
+    except ImportError:
+        print 'cannot import rpi.gpio library'
+
+    if check is True:
+        s = GpioR2.objects.get(id = pk)
+        if value == 'ON':
+            s.status = 'ON'
+            gpio.setmode(gpio.BCM)
+            gpio.setup(int(pin), gpio.OUT)
+            gpio.output(int(pin), gpio.HIGH)
+        elif value == 'OFF':
+            s.status = 'OFF'
+            gpio.setmode(gpio.BCM)
+            gpio.setup(int(pin), gpio.OUT)
+            gpio.output(int(pin), gpio.LOW)
+        s.save()
 
 
 class GpioR2CreateView(CreateView):
     model = GpioR2
     form_class = GpioR2Form
     template_name = 'new_conf.html'
-
 
     def get_success_url(self):
         return reverse('homepage')
@@ -112,6 +114,9 @@ class PageNotFoundView(TemplateView):
 class HomepageView(TemplateView):
     template_name = 'homepage.html'
 
+
+class SettingsView(TemplateView):
+    template_name = 'settings.html'
 
 # class Registration(CreateView):
 #      model = get_user_model()
