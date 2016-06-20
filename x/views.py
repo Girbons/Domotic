@@ -6,6 +6,7 @@ from django.views.generic import CreateView, ListView, DetailView, UpdateView, D
     TemplateView
 # from .forms import RegistrationForm
 from x.forms import GpioR2Form
+import os
 from .models import GpioR2, Temperature, MqttBroker
 
 
@@ -34,6 +35,7 @@ class LockListView(ListView):
             light(pin, pk, request.GET.get('light'))
         return super(LockListView, self).get(request, *args, **kwargs)
 
+
 class TemperatureListView(ListView):
     model = Temperature
     queryset = Temperature.objects.all()
@@ -41,16 +43,13 @@ class TemperatureListView(ListView):
 
 
 def light(pin, pk, value):
-    check = False
-
-    try:
+    is_raspberry = False
+    if os.uname()[4].startswith("arm"):
         import RPi.GPIO as gpio
-        check = True
-    except ImportError:
-        print 'cannot import rpi.gpio library'
+        is_raspberry = True
 
-    if check is True:
-        s = GpioR2.objects.get(id = pk)
+    if is_raspberry is True:
+        s = GpioR2.objects.get(id=pk)
         if value == 'ON':
             s.status = 'ON'
             gpio.setmode(gpio.BCM)
