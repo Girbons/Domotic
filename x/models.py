@@ -42,10 +42,10 @@ class GpioR2(models.Model):
 
 
 class MqttBroker(models.Model):
-    host = models.TextField()
+    host = models.CharField(max_length=128, blank=False, null=False)
     port = models.IntegerField()
     username = models.CharField(blank=False, null=False, default='', max_length=30)
-    password = models.TextField()
+    password = models.CharField(max_length=128, blank=False, null=False)
     topic = models.CharField(max_length=200, blank=False, null=False)
 
 

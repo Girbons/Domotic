@@ -9,13 +9,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div align="right">
-                              <div class="dropdown">
-                               <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                  <li><a href="#">Edit configuration</a></li>
-                                  <li><a href="#">Delete configuration</a></li>
-                                </ul>
-                              </div>
+                               <a href="{% url 'light_settings' %}"><button class="btn btn-warning "><span class="glyphicon glyphicon-cog"></span></button></a>
                         </div>
                         <div align="center">
                             <a href=""><img class="img-responsive" width="240" height="240" src="{% static 'light-bulb.svg' %}"></a>
@@ -27,13 +21,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div align="right">
-                              <div class="dropdown">
-                               <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                  <li><a href="#">Edit configuration</a></li>
-                                  <li><a href="#">Delete configuration</a></li>
-                                </ul>
-                              </div>
+                            <a href="{% url 'light_settings' %}"><button class="btn btn-warning"><span class="glyphicon glyphicon-cog"></span></button></a>
                         </div>
                         <div align="center">
                             <a href=""><img class="img-responsive" width="240" height="240" src="{% static 'lock.svg' %}"></a>
@@ -45,13 +33,15 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div align="right">
+                            <div align="right">
                               <div class="dropdown">
                                <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                  <li><a href="#">Edit configuration</a></li>
-                                  <li><a href="#">Delete configuration</a></li>
+                                  <li><a href="{% url 'temp_new' %}">New configuration</a></li>
+                                  <li><a href="{% url 'temp_settings' %}">Edit configuration</a></li>
                                 </ul>
                               </div>
+                            </div>
                         </div>
                         <div align="center">
                             <a href=""><img class="img-responsive" width="240" height="240" src="{% static 'temperature.svg' %}"></a>
@@ -63,13 +53,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div align="right">
-                              <div class="dropdown">
-                               <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                  <li class="disabled"><a href="#">Edit configuration</a></li>
-                                  <li class="disabled"><a href="#">Delete configuration</a></li>
-                                </ul>
-                              </div>
+                               <button class="btn btn-warning"><span class="glyphicon glyphicon-cog"></span></button>
                         </div>
                         <div align="center">
                             <a href=""><img class="img-responsive" width="240" height="240" src="{% static 'security-camera.svg' %}"></a>
@@ -81,24 +65,36 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div align="right">
-                              <div class="dropdown">
                                <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                  <li class="disabled"><a href="#">Edit username</a></li>
-                                  <li class="disabled"><a href="#">Edit email</a></li>
-                                  <li class="disabled"><a href="#">Edit password</a></li>
-                                </ul>
-                              </div>
+                        </div>
                         <div align="center">
                             <a href=""><img class="img-responsive" width="240" height="240" src="{% static 'user.svg' %}"></a>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-xs-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div align="right">
+                          <div class="dropdown">
+                           <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                              <li><a href="{% url 'broker_new' %}">New configuration</a></li>
+                              <li><a href="{% url 'broker_list' %}">Edit configuration</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div align="center">
+                            <a href=""><img class="img-responsive" width="240" height="250" src="{% static 'mail.svg' %}"></a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-xs-3">
                 <div class="panel panel-default">
                     <div class="panel-body">
+
                         <div align="center">
                             <a href="{% url 'new_conf' %}"><img class="img-responsive" width="240" height="250" src="{% static 'plusd.svg' %}"></a>
                         </div>

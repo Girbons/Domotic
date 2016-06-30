@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from .models import GpioR2
 
+
 class TestViews(TestCase):
     def setUp(self):
         User.objects.create_user('dio', password='123456', email='a@a.it')

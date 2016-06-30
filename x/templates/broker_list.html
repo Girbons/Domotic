@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div align="center">
+        <h4>Broker Configuration</h4>
+    </div>
+    <div class="col-xs-6 col-xs-offset-3">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td>Host</td>
+                    <td>Port</td>
+                    <td>Username</td>
+                    <td>Topic</td>
+                </tr>
+            </thead>
+            {% for mqttbroker in mqttbroker_list %}
+                <tbody>
+                    <tr>
+                        <td>{{ mqttbroker.host }}</td>
+                        <td>{{ mqttbroker.port }}</td>
+                        <td>{{ mqttbroker.username }}</td>
+                        <td>{{ mqttbroker.topic }}</td>
+                        <td>
+                            <button class="btn btn-primary"><a href="{% url 'broker_edit' pk=mqttbroker.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger"><a href="{% url 'broker_delete' pk=mqttbroker.pk %}"><span class="glyphicon glyphicon-remove"></span></a></button>
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

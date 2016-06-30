@@ -76,23 +76,10 @@ class GpioR2CreateView(CreateView):
         return super(GpioR2CreateView, self).dispatch(*args, **kwargs)
 
 
-class GpioR2DetailView(DetailView):
+class LightDetailView(DetailView):
     model = GpioR2
-    queryset = GpioR2.objects.all()
+    queryset = GpioR2.objects.filter(action='toggle light')
     template_name = 'conf_detail.html'
-
-
-class GpioR2ConfEditView(UpdateView):
-    model = GpioR2
-    fields = ('text', 'pin', 'action', 'image', )
-    template_name = 'conf_edit.html'
-
-    def get_success_url(self):
-        return reverse('conf_detail', args=(self.get_object().pk, ))
-
-    @method_decorator(permission_required('x.change_gpior2'))
-    def dispatch(self, *args, **kwargs):
-        return super(GpioR2ConfEditView, self).dispatch(*args, **kwargs)
 
 
 class GpioR2ConfDeleteView(DeleteView):
@@ -100,11 +87,7 @@ class GpioR2ConfDeleteView(DeleteView):
     template_name = 'conf_confirm_delete.html'
 
     def get_success_url(self):
-        return reverse('settings')
-
-    @method_decorator(permission_required('x.delete_gpior2'))
-    def dispatch(self, request, *args, **kwargs):
-        return super(GpioR2ConfDeleteView, self).dispatch(request, *args, **kwargs)
+        return reverse('light_settings')
 
 
 class Profile(ListView):
@@ -124,10 +107,84 @@ class SettingsView(TemplateView):
     template_name = 'settings.html'
 
 
+class SettingsLightEditView(UpdateView):
+    model = GpioR2
+    fields = ('room', 'item', 'pin', )
+    template_name = 'conf_edit.html'
 
-#TODO view for delete and edit the configuration
-# class SettingsEditView(ListView):
+    def get_success_url(self):
+        return reverse('light_settings')
+
+    # @method_decorator(permission_required('x.change_gpior2'))
+    # def dispatch(self, *args, **kwargs):
+    #     return super(SettingsEditView, self).dispatch(*args, **kwargs)
+
+
+class LightSettingsListView(ListView):
+    model = GpioR2
+    queryset = GpioR2.objects.all()
+    template_name = 'light_settings_list.html'
+
+
+class TemperatureSettingsListView(ListView):
+    model = Temperature
+    queryset = Temperature.objects.all()
+    template_name = 'temperature_settings_list.html'
+
+
+class TemperatureCreate(CreateView):
+    model = Temperature
+    fields = ('room', 'data', )
+    template_name = 'temp_new.html'
+
+
+class TemperatureEditConfiguration(UpdateView):
+    model = Temperature
+    fields = ('room', 'data', )
+    template_name = 'temperature_edit.html'
+
+
+class TemperatureDelete(DeleteView):
+    model = Temperature
+    template_name = 'conf_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('temp_settings')
+
+
+class BrokerCreate(CreateView):
+    model = MqttBroker
+    fields = ('host', 'port', 'username', 'password', 'topic', )
+    template_name = 'broker_new.html'
+
+    def get_success_url(self):
+        return reverse('settings')
+
+
+class BrokerListView(ListView):
+    model = MqttBroker
+    queryset = MqttBroker.objects.all()
+    template_name = 'broker_list.html'
+
+
+class BrokerEditView(UpdateView):
+    model = MqttBroker
+    fields = ('host', 'port', 'username', 'password', 'topic', )
+    template_name = 'broker_edit.html'
+
+
+class BrokerDelete(DeleteView):
+    model = MqttBroker
+    template_name = 'conf_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('broker_list')
+
+
+# class LockSettingsListView(ListView):
 #     model = GpioR2
+#     queryset = GpioR2.objects.filter(action='lock')
+#     template_name = ''
 
 # class Registration(CreateView):
 #      model = get_user_model()

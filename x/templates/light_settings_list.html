@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <div align="center">
+            <h4>Configuration</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+            <div id="light">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Room</th>
+                            <th>Item</th>
+                            <th>pin</th>
+                            <th>action</th>
+                        </tr>
+                    </thead>
+                    {% for gpior2 in gpior2_list %}
+                    <tbody>
+                        <tr>
+                            <td>{{ gpior2.room }}</td>
+                            <td>{{ gpior2.item }}</td>
+                            <td>{{ gpior2.pin }}</td>
+                            <td>{{ gpior2.action }}</td>
+                            <td>
+                                <button class="btn btn-primary"><a href="{% url 'conf_edit' pk=gpior2.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger"><a href="{% url 'conf_delete' pk=gpior2.pk %}"><span class="glyphicon glyphicon-remove"></span></a></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
