@@ -1,0 +1,10 @@
+# base
+django
+django-getenv
+django-redis
+dj-database-url
+whitenoise
+psycopg2
+
+# syntax
+flake8

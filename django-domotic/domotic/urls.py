@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.backends import django
 from rest_framework import routers
 
-from x import views
+from domotic import views
 from .views import Profile
 
 

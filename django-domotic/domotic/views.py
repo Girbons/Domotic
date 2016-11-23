@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
     TemplateView
 # from .forms import RegistrationForm
-from x.forms import GpioR2Form
+from domotic.forms import GpioR2Form
 import os
 from .models import GpioR2, Temperature, MqttBroker
 
@@ -27,7 +27,7 @@ class LockListView(ListView):
     model = GpioR2
     template_name = 'lock_list.html'
     queryset = GpioR2.objects.filter(action='lock')
-    
+ 
     def get(self, request, *args, **kwargs):
         if request.GET.get('light', None):
             pin = request.GET.get('pin')

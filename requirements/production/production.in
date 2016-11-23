@@ -1,0 +1,13 @@
+# base
+django
+django-getenv
+django-redis
+dj-database-url
+whitenoise
+psycopg2
+
+# raspberry
+RPi.GPIO
+
+# mqtt
+paho-mqtt
