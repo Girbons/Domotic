@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'', include('x.urls')),
+    url(r'', include('domotic.urls')),
 ]
 
 if settings.DEBUG:
