@@ -1,6 +1,7 @@
 import os
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
@@ -25,26 +26,13 @@ class GpioR2ConfListView(ListView):
         return super(GpioR2ConfListView, self).get(request, *args, **kwargs)
 
 
-class LockListView(ListView):
-    model = GpioR2
-    template_name = 'lock_list.html'
-    queryset = GpioR2.objects.filter(action='lock')
-
-    def get(self, request, *args, **kwargs):
-        if request.GET.get('light', None):
-            pin = request.GET.get('pin')
-            pk = request.GET.get('pk')
-            light(pin, pk, request.GET.get('light'))
-        return super(LockListView, self).get(request, *args, **kwargs)
-
-
 def light(pin, pk, value):
     is_raspberry = False
     if os.uname()[4].startswith("arm"):
         import RPi.GPIO as gpio
         is_raspberry = True
 
-    if is_raspberry is True:
+    if is_raspberry:
         s = GpioR2.objects.get(id=pk)
         if value == 'ON':
             s.status = 'ON'
@@ -59,7 +47,7 @@ def light(pin, pk, value):
         s.save()
 
 
-class GpioR2CreateView(CreateView):
+class GpioR2CreateView(LoginRequiredMixin, CreateView):
     model = GpioR2
     form_class = GpioR2Form
     template_name = 'new_conf.html'

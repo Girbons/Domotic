@@ -12,10 +12,8 @@ urlpatterns = [
     url(r'^$', login_required(views.HomepageView.as_view()), name='homepage'),
     # light configuration
     url(r'^light-control/$', login_required(views.GpioR2ConfListView.as_view()), name='conf_list'),
-    # lock door configuration
-    url(r'^lock-control/$', login_required(views.LockListView.as_view()), name='lock_list'),
     # new configuration
-    url(r'^configuration/new/$', login_required(views.GpioR2CreateView.as_view()), name='new_conf'),
+    url(r'^configuration/new/$', views.GpioR2CreateView.as_view(), name='new_conf'),
 
     # url about user
     # url(r'^accounts/register/$', views.Registration.as_view(), name='register'),
