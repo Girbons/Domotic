@@ -14,21 +14,21 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS','').replace(' ', '').split(',')
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS', '').replace(' ', '').split(',')
 
 AUTH_PASSWORD_VALIDATORS = [
-        {
-            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-        },
-        {
-            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        },
-        {
-            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-        },
-        {
-            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-        },
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 # Application definition
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES_DEFAULT = 'postgres://devel:123456@127.0.0.1:5432/domotic'
 DATABASES = {
-        'default': dj_database_url.config(default=DATABASES_DEFAULT),
+    'default': dj_database_url.config(default=DATABASES_DEFAULT),
 }
 
 CACHES_DEFAULT = 'redis://127.0.0.1:6379/1'

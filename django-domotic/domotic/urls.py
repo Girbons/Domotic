@@ -1,8 +1,6 @@
-from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
-from django.template.backends import django
 
 from domotic import views
 from .views import Profile
@@ -36,8 +34,10 @@ urlpatterns = [
 
     # settings urls
     url(r'^settings/$', login_required(views.SettingsView.as_view()), name='settings'),
-    url(r'^settings/configuration-settings/$', login_required(views.LightSettingsListView.as_view()), name='light_settings'),
-    url(r'^settings/temperature-settings/$', login_required(views.TemperatureSettingsListView.as_view()), name='temp_settings'),
+    url(r'^settings/configuration-settings/$', login_required(views.LightSettingsListView.as_view()),
+        name='light_settings'),
+    url(r'^settings/temperature-settings/$', login_required(views.TemperatureSettingsListView.as_view()),
+        name='temp_settings'),
     url(r'^settings/broker-settings/$', login_required(views.BrokerListView.as_view()), name='broker_list'),
     url(r'^settings/light/(?P<pk>[0-9]+)/edit/$', login_required(views.SettingsLightEditView.as_view()),
         name='conf_edit'),
@@ -52,4 +52,3 @@ urlpatterns = [
     url(r'^configuration/temperature/(?P<pk>[0-9]+)/delete/$', login_required(views.TemperatureDelete.as_view()),
         name='temp_delete'),
 ]
-

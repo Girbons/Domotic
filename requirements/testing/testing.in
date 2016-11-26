@@ -1,0 +1,22 @@
+# base
+django
+django-getenv
+django-redis
+dj-database-url
+whitenoise
+psycopg2
+
+# raspberry
+# RPi.GPIO
+
+# mqtt
+paho-mqtt
+
+pytest
+pytest-django
+pytest-xdist
+pytest-cov
+pytest-selenium
+flake8
+coverage
+ipdb

@@ -1,0 +1,12 @@
+[run]
+source = django-domotic
+omit =
+    */migrations/*
+    */tests/*
+    django-domotic/manage.py
+    django-domotic/project/wsgi.py
+    django-domotic/project/settings/production.py
+
+[report]
+skip_covered = True
+show_missing = True

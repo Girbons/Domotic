@@ -1,5 +1,0 @@
-django==1.9
-RPi.GPIO==0.6.2
-djangorestframework==3.2.3
-whitenoise==3.0
-paho-mqtt==1.2

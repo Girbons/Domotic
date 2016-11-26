@@ -9,8 +9,6 @@ class Gpio(models.Model):
 
     ACTIONS = (
         ('toggle light', 'toggle light'),
-        ('lock', 'lock'),
-        # ('camera', 'camera'),
     )
 
     STATUS = (
@@ -21,7 +19,7 @@ class Gpio(models.Model):
 
 
 class GpioR2(models.Model):
-    CHOICES = ((2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (12, 12),  (13, 13),
+    CHOICES = ((2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (12, 12), (13, 13),
                (14, 14), (15, 15), (16, 16), (17, 17), (19, 19), (18, 18), (20, 20), (21, 21), (22, 22), (23, 23),
                (24, 24), (25, 25), (26, 26), (27, 27))
     item = models.CharField(max_length=50, default='')
