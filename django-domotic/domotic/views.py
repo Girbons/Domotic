@@ -1,12 +1,15 @@
+import os
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, \
     TemplateView
+
 from domotic.forms import GpioR2Form
-import os
-from .models import GpioR2, Temperature, MqttBroker
+
+from .models import GpioR2
 
 
 class GpioR2ConfListView(ListView):
@@ -33,12 +36,6 @@ class LockListView(ListView):
             pk = request.GET.get('pk')
             light(pin, pk, request.GET.get('light'))
         return super(LockListView, self).get(request, *args, **kwargs)
-
-
-class TemperatureListView(ListView):
-    model = Temperature
-    queryset = Temperature.objects.all()
-    template_name = 'temperature.html'
 
 
 def light(pin, pk, value):
@@ -119,58 +116,3 @@ class LightSettingsListView(ListView):
     model = GpioR2
     queryset = GpioR2.objects.all()
     template_name = 'light_settings_list.html'
-
-
-class TemperatureSettingsListView(ListView):
-    model = Temperature
-    queryset = Temperature.objects.all()
-    template_name = 'temperature_settings_list.html'
-
-
-class TemperatureCreate(CreateView):
-    model = Temperature
-    fields = ('data', )
-    template_name = 'temp_new.html'
-
-
-class TemperatureEditConfiguration(UpdateView):
-    model = Temperature
-    fields = ('data', )
-    template_name = 'temperature_edit.html'
-
-
-class TemperatureDelete(DeleteView):
-    model = Temperature
-    template_name = 'conf_confirm_delete.html'
-
-    def get_success_url(self):
-        return reverse('temp_settings')
-
-
-class BrokerCreate(CreateView):
-    model = MqttBroker
-    fields = ('host', 'port', 'username', 'password', 'topic', )
-    template_name = 'broker_new.html'
-
-    def get_success_url(self):
-        return reverse('settings')
-
-
-class BrokerListView(ListView):
-    model = MqttBroker
-    queryset = MqttBroker.objects.all()
-    template_name = 'broker_list.html'
-
-
-class BrokerEditView(UpdateView):
-    model = MqttBroker
-    fields = ('host', 'port', 'username', 'password', 'topic', )
-    template_name = 'broker_edit.html'
-
-
-class BrokerDelete(DeleteView):
-    model = MqttBroker
-    template_name = 'conf_confirm_delete.html'
-
-    def get_success_url(self):
-        return reverse('broker_list')

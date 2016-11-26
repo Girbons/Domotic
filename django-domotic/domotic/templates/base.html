@@ -47,14 +47,13 @@
                         </a>
                     </li>
                     <li><a href="{% url 'conf_list' %}">Lights</a></li>
-                    <li><a href="{% url 'temp' %}">Temperatures</a></li>
                     <li><a href="{% url 'lock_list' %}">Locks</a></li>
                     <li class="disabled"><a href="#"><span class=""></span>Security Cameras</a></li>
                     <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"> Profile</span></a></li>
                     <li><a href="{% url 'settings' %}"><span class="glyphicon glyphicon-wrench"> Settings</span></a></li>
                 </ul>
             </div>
-        <script>
+            <script>
             $("#menu-toggle").click(function(e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");

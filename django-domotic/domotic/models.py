@@ -29,16 +29,3 @@ class GpioR2(models.Model):
 
     def __str__(self):
         return self.item
-
-
-class MqttBroker(models.Model):
-    host = models.CharField(max_length=128, blank=False, null=False)
-    port = models.IntegerField()
-    username = models.CharField(blank=False, null=False, default='', max_length=30)
-    password = models.CharField(max_length=128, blank=False, null=False)
-    topic = models.CharField(max_length=200, blank=False, null=False)
-
-
-class Temperature(models.Model):
-    temperature = models.FloatField(blank=True, null=True)
-    data = models.ForeignKey(MqttBroker, blank=True, null=True)
